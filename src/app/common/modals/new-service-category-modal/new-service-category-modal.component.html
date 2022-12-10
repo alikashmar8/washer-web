@@ -1,0 +1,32 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center" translate>Add a new Service Category</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+
+
+      <div class="form-label-group m-4">
+        <label>Name:</label>
+        <input type="text" name="name" id="name" [(ngModel)]="category.name" class="form-control common-input px-3"
+          placeholder="Name" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="isActive">Is Active: </label>
+        <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="category.isActive" class="" required
+          autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="isActive">Icon: </label>
+        <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading" translate>Add Service Category</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

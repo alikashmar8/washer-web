@@ -1,0 +1,9 @@
+<div *ngIf="currentEmployee.role == 'ADMIN'">
+  <app-admin-home></app-admin-home>
+</div>
+<div *ngIf="currentEmployee.role == 'BRANCH_EMPLOYEE'">
+  <app-branch-employee-home></app-branch-employee-home>
+</div>
+<div *ngIf="currentEmployee.role == 'DRIVER'">
+  <h1>You are not allowed to access this page!</h1>
+</div>

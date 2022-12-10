@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Service Requests:</h3>
+  </div>
+  <div class="col-sm-4">
+    total: {{count}}
+  </div>
+</div>
+<hr class="m-2">
+<div class="row form-group ml-2">
+  <div class="col-md-1">
+    <button class="btn btn-primary" (click)="showHideFilters()">
+      <i class="fa fa-filter"></i>
+    </button>
+  </div>
+  <span class="col-sm-7"></span>
+  <span class="col-sm-3">
+    <!-- <button class="btn btn-success" (click)="openNewEmployeeModal()">
+      Add New
+    </button> -->
+  </span>
+</div>
+<hr>
+
+<div class="row" *ngIf="displayFilters">
+  <div class="col-md-4">
+    <label>Search</label>
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filters.search">
+  </div>
+  <div class="col-md-4" *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+    <label>Branch</label>
+    <select [(ngModel)]="filters.branchId" class="form-control" name="role">
+      <option *ngFor="let branch of branches" [value]="branch.id">{{branch.description}}</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label>Status:</label>
+    <select class="form-control" name="role" [(ngModel)]="filters.status">
+      <option [value]="EmployeeRole.BRANCH_EMPLOYEE">{{EmployeeRole.BRANCH_EMPLOYEE}}</option>
+      <option [value]="EmployeeRole.DRIVER" selected="selected">{{EmployeeRole.DRIVER}}</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label>Is Paid?</label>
+    <select class="form-control" [(ngModel)]="filters.isPaid">
+      <option value="true">
+        true
+      </option>
+      <option value="false">
+        false
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primary mt-4" (click)="getPageRecords(1)">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+<div *ngIf="serviceRequests.length">
+  <tr *ngFor="let request of serviceRequests; let i = index">
+    {{request.id}}
+  </tr>
+  <div class="row w-100">
+    <div class="col-md-10">
+      <ul class="pagination ">
+        <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+          *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+          <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="row m-5 p-5 alert-danger" *ngIf="!serviceRequests.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No requests placed yet!</h3>
+</div>

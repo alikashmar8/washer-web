@@ -10,6 +10,6 @@ export class Employee {
   phoneNumber: string;
   isActive: boolean;
   role: EmployeeRole;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

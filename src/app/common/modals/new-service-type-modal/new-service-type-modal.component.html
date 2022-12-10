@@ -1,0 +1,63 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center" translate>Add a new Service Category</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+
+
+      <div class="form-label-group m-4">
+        <label>Service Category:</label>
+        <select [(ngModel)]="type.categoryId" class="form-control" name="role">
+          <option *ngFor="let category of serviceCategories" [value]="category.id">{{category.name}}</option>
+        </select>
+      </div>
+
+
+      <div class="form-label-group m-4">
+        <label>Name:</label>
+        <input type="text" name="name" id="name" [(ngModel)]="type.name" class="form-control common-input px-3"
+          placeholder="Name" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>price:</label>
+        <input type="number" name="price" id="price" [(ngModel)]="type.price" class="form-control common-input px-3"
+          placeholder="0.0" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4 col-md-6">
+        <label for="isActive">Is Active? </label>
+        <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="type.isActive" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4 col-md-6">
+        <label for="showQuantityInput">Show Quantity Input? </label>
+        <input type="checkbox" name="showQuantityInput" id="showQuantityInput" [(ngModel)]="type.showQuantityInput"
+          class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4 col-md-6">
+        <label for="showVehicleSelection">Show Vehicle Selection? </label>
+        <input type="checkbox" name="showVehicleSelection" id="showVehicleSelection"
+          [(ngModel)]="type.showVehicleSelection" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4 col-md-6" *ngIf="type.showVehicleSelection">
+        <label for="isMotoAllowed">Is Moto Allowed? </label>
+        <input type="checkbox" name="isMotoAllowed" id="isMotoAllowed" [(ngModel)]="type.isMotoAllowed" class=""
+          required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="isActive">Icon: </label>
+        <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading" translate>Add Service Category</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

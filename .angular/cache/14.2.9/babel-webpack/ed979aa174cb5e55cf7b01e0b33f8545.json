@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const BCRYPT_SALT = '10';\nexport const JWT_SECRET = 'PROWESS_SECRET';\nexport const JWT_USERS_EXPIRY_TIME = '30d'; // at least 1 char & 1 num\n\nexport const passwordRegex = /^(?=.*[a-z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{8,}$/;\nexport const loadingGifUrl = 'assets/gifs/loading.gif';","map":null,"metadata":{},"sourceType":"module"}

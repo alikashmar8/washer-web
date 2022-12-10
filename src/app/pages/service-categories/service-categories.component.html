@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Service Categories:</h3>
+  </div>
+  <div class="col-sm-4">
+    total: {{count}}
+  </div>
+</div>
+<hr class="m-2">
+<div class="row form-group">
+  <div class="col-md-1">
+    <div class="mt-2 h6">Search:</div>
+  </div>
+  <div class="col-md-6">
+    <input type="text" class="form-control" name="search" [(ngModel)]="filters.search">
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-search mt-2" aria-hidden="true" (click)="getPageRecords(1)"></i>
+  </div>
+
+  <span class="col-sm-3">
+    <button class="btn btn-success" (click)="openNewServiceCategoryModal()">
+      Add New
+    </button>
+  </span>
+</div>
+<hr>
+
+<div *ngIf="serviceCategories.length">
+
+  <div *ngFor="let category of serviceCategories ; let i = index">
+    <hr>
+    <div [ngClass]="{
+        'alert-info': category.isActive,
+        'alert-danger': !category.isActive
+      }" class="alert d-flex justify-content-between">
+      <img src="{{backendUrl}}{{ category.icon }}" alt="logo.png" width="38">
+      {{category.logo}}
+      <span>{{category.name}}</span>
+      <span>
+        <abbr *ngIf="!category.isActive">
+          <i class="fa fa-trash        bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+            (click)="openDeleteModal(category.id, category.name)"></i>
+          <i class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+            (click)="openEnableDisableModal(category.id, category.name, category.isActive)"></i>
+        </abbr>
+        <abbr *ngIf="category.isActive"
+          (click)="openEnableDisableModal(category.id, category.name, category.isActive)"><i
+            class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+      </span>
+
+    </div>
+  </div>
+  <div class="row w-100">
+    <div class="col-md-10">
+      <ul class="pagination ">
+        <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+          *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+          <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="row m-5 p-5 alert-danger" *ngIf="!serviceCategories.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No service categories available!</h3>
+</div>

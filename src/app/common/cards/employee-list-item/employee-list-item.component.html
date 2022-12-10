@@ -1,0 +1,55 @@
+<div class="job-box d-md-flex align-items-center justify-content-between mb-30 bg-white rounded px-4" style="background-image: linear-gradient(to right, rgb(72, 197, 239, 50%) 0%, rgb(111, 134, 214, 50%) 100%); border-radius: 25px!important;
+  font-size: small;" *ngIf="employee">
+  <div class="job-left ml-2 my-1 d-md-flex align-items-center flex-wrap row">
+    <div class="col-md-1" style="padding: 0;">
+      <div class="img-holder d-lg-flex glow" [ngStyle]="{
+        'background-color': employee.isActive || employee.role == EmployeeRole.ADMIN  ? 'lime' : 'red'
+      }">
+        <div class="shine"></div>
+        <div class="light"></div>
+        <span class="font-weight-light" style="font-size: small">{{ employee.isActive || employee.role == 'ADMIN'?
+          'Active':
+          'Inactive'}} </span>
+      </div>
+    </div>
+    <div class="job-content col-md-11">
+      <h4 class="text-center text-md-left m-3">{{employee.firstName}} {{employee.lastName}}</h4>
+      <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+        <!-- <li class="mr-md-4">
+          <i class="zmdi zmdi-pin mr-2"></i>
+          <span>
+            <span class="d-inline-block text-truncate" style="max-width: 50px">
+              appointment.locationDescription </span>
+          </span>
+        </li>
+        <li class="mr-md-4">
+          <i class="zmdi zmdi-money mr-2"></i> 100 $
+        </li> -->
+        <li class="mr-md-4">
+          <i class="fa fa-user me-2"></i>
+          <span>{{employee.role}}</span>
+        </li>
+        <!-- <li class="mr-md-4" translate>
+          <i class="fa fa-calendar-times"></i>
+          {{ employee.expiryDate? (employee.expiryDate | date: "shortDate"): 'No expiry date' }}
+        </li> -->
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="job-right my-1 flex-shrink-0 col-md-2">
+
+    <div class="row">
+      <button class="btn btn-sm d-block w-100 d-sm-inline-block btn-info m-1" (click)="openDetailModal(employee)"
+        translate>Details</button>
+    </div>
+
+    <div class="row" *ngIf="employee.role != 'ADMIN'">
+      <button class="btn btn-sm d-block w-100 d-sm-inline-block btn-danger m-1"
+        (click)="openDeleteModal(employee.id, employee.name)" translate>
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
