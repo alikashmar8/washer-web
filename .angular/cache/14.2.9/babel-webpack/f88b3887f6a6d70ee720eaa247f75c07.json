@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var EmployeeRole = /*#__PURE__*/(() => {\n  (function (EmployeeRole) {\n    EmployeeRole[\"ADMIN\"] = \"ADMIN\";\n    EmployeeRole[\"BRANCH_EMPLOYEE\"] = \"BRANCH_EMPLOYEE\";\n    EmployeeRole[\"DRIVER\"] = \"DRIVER\";\n  })(EmployeeRole || (EmployeeRole = {}));\n\n  return EmployeeRole;\n})();","map":null,"metadata":{},"sourceType":"module"}
