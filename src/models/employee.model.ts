@@ -10,6 +10,7 @@ export class Employee {
   phoneNumber: string;
   isActive: boolean;
   role: EmployeeRole;
+  branchId?: string;
   createdAt: Date;
   updatedAt: Date;
 }
