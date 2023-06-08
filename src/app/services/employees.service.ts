@@ -12,17 +12,16 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class EmployeesService {
-
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   async getAll(
     take: number,
     skip: number,
     filters?: {
-      search: string;
-      branchId: string;
-      role: EmployeeRole;
-      isActive: boolean;
+      search?: string;
+      branchId?: string;
+      role?: EmployeeRole;
+      isActive?: boolean;
     }
   ): Promise<{
     count: number;
@@ -48,6 +47,7 @@ export class EmployeesService {
   store(data: CreateEmployeeDTO) {
     return this.http.post(employeesEndpoint, data, { headers: getHeaders() });
   }
+
   delete(employeeId: string) {
     return this.http.delete(`${employeesEndpoint}${employeeId}`, {
       headers: getHeaders(),

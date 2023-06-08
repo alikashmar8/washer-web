@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class ServiceCategoriesService {
+
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   async getAll(
@@ -60,6 +61,14 @@ export class ServiceCategoriesService {
       serviceCategoriesEndpoint + id + '/status',
       { isActive },
       { headers: getHeaders() }
+    );
+  }
+
+  update(id: string, data: any) {
+    return this.http.patch(
+      serviceCategoriesEndpoint + id,
+      data,
+      { headers: getFormDataHeaders() }
     );
   }
 }

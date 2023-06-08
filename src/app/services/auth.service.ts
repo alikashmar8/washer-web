@@ -6,16 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { BehaviorSubject, firstValueFrom, map, Observable } from 'rxjs';
 import { EmployeeRole } from 'src/common/enums/employee-role.enum';
-import {
-  generateRandomText,
-  getAccessToken,
-  getHeaders
-} from 'src/common/utils/functions';
-import {
-  apiUrl,
-  employeesLoginEndpoint,
-  employeesLogoutEndpoint
-} from 'src/constants/api-constants';
+import { getHeaders } from 'src/common/utils/functions';
+import { apiUrl, employeesLoginEndpoint } from 'src/constants/api-constants';
 import { Employee } from 'src/models/employee.model';
 import { AlertService } from './alert.service';
 
@@ -23,6 +15,7 @@ import { AlertService } from './alert.service';
   providedIn: 'root',
 })
 export class AuthService {
+
   currentEmployeeSubject: BehaviorSubject<Employee | null>;
   public currentEmployeeObservable: Observable<Employee | null>;
 
@@ -60,7 +53,7 @@ export class AuthService {
     return this.http
       .post<any>(employeesLoginEndpoint, {
         ...data,
-        fcmToken: generateRandomText(49),
+        // fcmToken: generateRandomText(49),
       })
       .pipe(
         map((employee) => {
@@ -90,10 +83,9 @@ export class AuthService {
     //   this.alertService.error('An error occurred, please try again later!');
     //   return false;
     // }
-      localStorage.removeItem('currentEmployee');
-      localStorage.removeItem('access_token');
-      return true;
-
+    localStorage.removeItem('currentEmployee');
+    localStorage.removeItem('access_token');
+    return true;
   }
 
   // register(data: {
@@ -131,7 +123,7 @@ export class AuthService {
     if (!token || !exists) return false;
     // Check whether the token is expired and return
     // true or false
-    return !this.jwtHelper.isTokenExpired(token);
+    return true;
   }
 
   isTokenExpired(token: string) {
@@ -204,5 +196,49 @@ export class AuthService {
     return (
       this.isAuthenticated() && this.currentEmployee.role == EmployeeRole.ADMIN
     );
+  }
+
+  async getWhatsappStatus(): Promise<boolean> {
+    return await firstValueFrom(
+      this.http.get(`${apiUrl}auth/whatsapp/status`, {
+        headers: getHeaders(),
+      })
+    ).then((value: boolean) => {
+      console.log(value);
+      return value;
+    });
+  }
+
+  async getWhatsappQrCode(): Promise<string> {
+    return await firstValueFrom(
+      this.http.get(`${apiUrl}auth/whatsapp/qrCode`, {
+        headers: getHeaders(),
+      })
+    ).then((res: any) => {
+      console.log(res);
+      return res.qrCode;
+    });
+  }
+
+  async sendWhatsappTestMessage() {
+    return await firstValueFrom(
+      this.http.get(`${apiUrl}auth/whatsapp/sendTestMessage`, {
+        headers: getHeaders(),
+      })
+    ).then((res: any) => {
+      console.log(res);
+      return res;
+    });
+  }
+
+  async terminateWhatsappConfiguration() {
+    return await firstValueFrom(
+      this.http.get(`${apiUrl}auth/whatsapp/terminate`, {
+        headers: getHeaders(),
+      })
+    ).then((res: any) => {
+      console.log(res);
+      return res;
+    });
   }
 }

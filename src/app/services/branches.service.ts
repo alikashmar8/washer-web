@@ -41,9 +41,27 @@ export class BranchesService {
     });
   }
 
+  async getById(branchId: string): Promise<Branch> {
+    return await firstValueFrom(
+      this.http.get(branchesEndpoint + branchId, {
+        headers: getHeaders(),
+      })
+    ).then((value: Branch) => {
+      console.log(value);
+      return value;
+    });
+  }
+
   store(data: CreateBranchDTO) {
     return this.http.post(branchesEndpoint, data, { headers: getHeaders() });
   }
+
+  update(id: string, data: { description?: string, isActive?: any }) {
+    return this.http.patch(branchesEndpoint + id, data, {
+      headers: getHeaders(),
+    });
+  }
+
   delete(branchId: string) {
     return this.http.delete(`${branchesEndpoint}${branchId}`, {
       headers: getHeaders(),

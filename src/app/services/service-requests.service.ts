@@ -9,7 +9,7 @@ import { ServiceRequest } from 'src/models/service-request.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServiceRequestsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -17,7 +17,17 @@ export class ServiceRequestsService {
   async getAll(
     take: number,
     skip: number,
-    filters?: { search?: string; branchId?: string; isPaid?: boolean; status?: RequestStatus; fromDate?: string; toDate?: string; paymentType?:  PaymentType; serviceTypeId?: string; ServiceRequestId?: string; }
+    filters?: {
+      search?: string;
+      branchId?: string;
+      isPaid?: boolean;
+      status?: RequestStatus;
+      fromDate?: string;
+      toDate?: string;
+      paymentType?: PaymentType;
+      serviceTypeId?: string;
+      ServiceRequestId?: string;
+    }
   ): Promise<{
     count: number;
     data: ServiceRequest[];
@@ -31,11 +41,14 @@ export class ServiceRequestsService {
     }
 
     return await firstValueFrom(
-      this.http.get(serviceRequestsEndpoint + `?take=${take}&skip=${skip}${query}`, {
-        headers: getHeaders(),
-      })
+      this.http.get(
+        serviceRequestsEndpoint + `?take=${take}&skip=${skip}${query}`,
+        {
+          headers: getHeaders(),
+        }
+      )
     ).then((value: { count: number; data: ServiceRequest[] }) => {
-      console.log(`Result: ` + value);
+      console.log(value);
       return value;
     });
   }
@@ -44,6 +57,43 @@ export class ServiceRequestsService {
     return this.http.patch(
       serviceRequestsEndpoint + id + '/status',
       { status },
+      { headers: getHeaders() }
+    );
+  }
+
+  updatePaymentStatus(id: string, isPaid: boolean) {
+    return this.http.patch(
+      serviceRequestsEndpoint + id + '/payment-status',
+      { isPaid },
+      { headers: getHeaders() }
+    );
+  }
+
+  async getById(serviceRequestId: string): Promise<ServiceRequest> {
+    return await firstValueFrom(
+      this.http.get(serviceRequestsEndpoint + serviceRequestId, {
+        headers: getHeaders(),
+      })
+    ).then((value: ServiceRequest) => {
+      console.log(value);
+      return value;
+    });
+  }
+
+  assignEmployee(requestId: string, employeeId: any) {
+    return this.http.patch(
+      serviceRequestsEndpoint + requestId + '/assign-employee',
+      {
+        employeeId,
+      },
+      { headers: getHeaders() }
+    );
+  }
+
+  update(serviceRequestId: string, data: { confirmedDate?: string; }) {
+    return this.http.patch(
+      serviceRequestsEndpoint + serviceRequestId,
+      data,
       { headers: getHeaders() }
     );
   }

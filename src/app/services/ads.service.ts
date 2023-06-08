@@ -2,15 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { getFormDataHeaders, getHeaders } from 'src/common/utils/functions';
-import { serviceTypesEndpoint } from 'src/constants/api-constants';
-import { ServiceType } from 'src/models/service-type.model';
-import { AuthService } from './auth.service';
+import { adsEndpoint } from 'src/constants/api-constants';
+import { Ad } from 'src/models/ad.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ServiceTypesService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+export class AdsService {
+  constructor(private http: HttpClient) {}
 
   async getAll(
     take: number,
@@ -20,7 +19,7 @@ export class ServiceTypesService {
     }
   ): Promise<{
     count: number;
-    data: ServiceType[];
+    data: Ad[];
   }> {
     let query = '';
     for (var key in filters) {
@@ -31,39 +30,36 @@ export class ServiceTypesService {
     }
 
     return await firstValueFrom(
-      this.http.get(
-        serviceTypesEndpoint + `?take=${take}&skip=${skip}${query}`,
-        {
-          headers: getHeaders(),
-        }
-      )
-    ).then((value: { count: number; data: ServiceType[] }) => {
+      this.http.get(adsEndpoint + `?take=${take}&skip=${skip}${query}`, {
+        headers: getHeaders(),
+      })
+    ).then((value: { count: number; data: Ad[] }) => {
       return value;
     });
   }
 
   store(data) {
-    return this.http.post(serviceTypesEndpoint, data, {
+    return this.http.post(adsEndpoint, data, {
       headers: getFormDataHeaders(),
     });
   }
 
-  delete(branchId: string) {
-    return this.http.delete(`${serviceTypesEndpoint}${branchId}`, {
+  delete(adId: string) {
+    return this.http.delete(`${adsEndpoint}${adId}`, {
       headers: getHeaders(),
     });
   }
 
   changeStatus(id: string, isActive: boolean) {
     return this.http.patch(
-      serviceTypesEndpoint + id,
-      { isActive },
+      adsEndpoint + id,
+      { isActive: isActive },
       { headers: getHeaders() }
     );
   }
 
   update(id: string, data: any) {
-    return this.http.patch(serviceTypesEndpoint + id, data, {
+    return this.http.patch(adsEndpoint + id, data, {
       headers: getFormDataHeaders(),
     });
   }
