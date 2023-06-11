@@ -1,0 +1,51 @@
+
+<div class="container" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center">Add a new Product</h2>
+          <form class="form-signin" [formGroup]="form" (ngSubmit)="store()">
+            <div class="form-label-group m-4">
+              <input type="text" name="title" id="title" formControlName="title" class="form-control common-input px-3"
+                placeholder="Title" required autofocus />
+            </div>
+            <div class="form-label-group m-4">
+              <input type="text" name="description" id="description" formControlName="description"
+                class="form-control common-input px-3" placeholder="Description" required autofocus />
+            </div>
+
+            <div class="form-label-group m-4">
+              <input type="number" name="price" id="price" formControlName="price"
+                class="form-control common-input px-3" placeholder="Price" required autofocus min="1" />
+            </div>
+
+            <div class="form-label-group m-4">
+              <span style="margin-right: 100px">Category:</span>
+              <select class="form-control-sm" formControlName="categoryId">
+                <option *ngFor="let category of categories" [value]="category.id">
+                  {{ category.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-label-group m-4">
+              <input formControlName="images" id="images" type="file" multiple class="form-control"
+                (change)="uploadMultiImage($event)">
+              <div *ngIf="f.file && f.file.touched && f.file.invalid" class="alert alert-danger">
+                <div *ngIf="f.file.errors.required">File is required.</div>
+              </div>
+            </div>
+
+            <div class="form-label-group m-4">
+              <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+                <span *ngIf="!isStoreLoading">Add Product</span>
+                <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

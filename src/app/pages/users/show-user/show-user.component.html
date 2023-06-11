@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="container border rounded p-4 m-4">
+    <h5><strong>General Details:</strong></h5>
+    <hr>
+    <div class="row">
+      <div class="col-md-6 p-1">
+        <h6><strong>Name:</strong></h6>
+        {{user.firstName}} {{user.lastName}}
+      </div>
+      <div class="col-md-6 p-1">
+        <h6><strong>Username:</strong></h6>
+        {{user.username}}
+      </div>
+      <!-- <div class="col-md-6 p-1">
+        <h6><strong>Status:</strong></h6>
+        {{user.isActive}}
+      </div> -->
+      <div class="col-md-6 p-1">
+        <h6><strong>Phone Number:</strong></h6>
+        {{user.phoneNumber}} <small>({{user.isMobileVerified ? 'verified' : 'unverified'}})</small>
+      </div>
+      <div class="col-md-6 p-1">
+        <h6><strong>Email:</strong></h6>
+        {{user.email}} <small>({{user.isEmailVerified ? 'verified' : 'unverified'}})</small>
+      </div>
+      <div class="col-md-6 p-1">
+        <h6><strong>Created At:</strong></h6>
+        {{user.createdAt}}
+      </div>
+    </div>
+  </div>
+
+  <div class="container border rounded p-4 m-4">
+    <h5><strong>Addresses:</strong></h5>
+    <hr>
+    <table class="table striped">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Region</th>
+          <th>Street</th>
+          <th>Building</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let address  of user.addresses">
+          <td>{{address.city}}</td>
+          <td>{{address.region}}</td>
+          <td>{{address.street}}</td>
+          <td>{{address.building}}</td>
+          <td>{{address.lat}}</td>
+          <td>{{address.lon}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container border rounded p-4 m-4">
+    <h5><strong>Vehicles:</strong></h5>
+    <hr>
+    <table class="table striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Plate</th>
+          <th>Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle  of user.vehicles">
+          <td style="vertical-align: middle"><img src="{{mediaRoot}}{{vehicle.photo}}"  width="100"></td>
+          <td style="vertical-align: middle">{{vehicle.name}}</td>
+          <td style="vertical-align: middle">{{vehicle.type}}</td>
+          <td style="vertical-align: middle">{{vehicle.brand}}</td>
+          <td style="vertical-align: middle">{{vehicle.model}}</td>
+          <td style="vertical-align: middle">{{vehicle.year}}</td>
+          <td style="vertical-align: middle">{{vehicle.plateSymbol}} {{vehicle.plateNumber}}</td>
+          <td style="vertical-align: middle">{{vehicle.color}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container border rounded p-4 m-4">
+    <h5><strong>Financial Details:</strong></h5>
+    <hr>
+    <div class="row">
+      <div class="col-md-6 p-1">
+        <h6><strong>Wallet Amount:</strong></h6>
+        {{user.wallet.balance}} {{user.wallet.currency}}
+      </div>
+      <div class="col-md-6 p-1">
+        <h6><strong>Points:</strong></h6>
+        {{user.points}}
+      </div>
+      <div class="col-md-6 p-1">
+        <h6><strong>Referral Code:</strong></h6>
+        {{user.referralCode}}
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-10">
+        <h6><strong>Promo Codes:</strong></h6>
+      </div>
+      <div class="col-sm-2">
+        <i class="fa fa-plus p-2 bg-primary rounded text-white" aria-hidden="true" (click)="openNewPromoModal()"></i>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Discount</th>
+          <th>Number Of Usage</th>
+          <th>Limit</th>
+          <th>Expiry Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let promo of user.promos ; let i = index" [ngClass]="{'bg-danger': !promo.isActive}">
+          <td>{{promo.code}}</td>
+          <td>{{promo.discountAmount ? promo.discountAmount + ' $' : promo.discountPercentage + ' %' }}
+          <td>{{promo.numberOfUsage}}</td>
+          <td>{{promo.limit}}</td>
+          <td>{{promo.expiryDate | date}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

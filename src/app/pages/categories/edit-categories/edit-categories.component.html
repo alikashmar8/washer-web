@@ -1,0 +1,48 @@
+
+<div class="container m-5" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center">Add a new Category</h2>
+          <div class="form-label-group m-4">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              [(ngModel)]="category.name"
+              class="form-control common-input px-3"
+              placeholder="Name"
+              required
+              autofocus
+            />
+          </div>
+          <div class="form-label-group m-4">
+            <label for="isActive">Is Active? </label>
+            <input
+              type="checkbox"
+              name="isActive"
+              id="isActive"
+              [(ngModel)]="category.isActive"
+              class="common-input mx-3 px-3"
+              placeholder="isActive"
+              required
+              autofocus
+            />
+          </div>
+
+          <div class="form-label-group m-4">
+            <button
+              class="btn btn-lg btn-primary btn-block form-control text-uppercase"
+              [disabled]="isEditLoading"
+              (click)="update()"
+            >
+              <span *ngIf="!isEditLoading">Edit Category</span>
+              <img src="{{ loadingGif }}" *ngIf="isEditLoading" width="20px" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

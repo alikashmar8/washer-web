@@ -34,19 +34,34 @@
         'alert-info': category.isActive,
         'alert-danger': !category.isActive
       }" class="alert d-flex justify-content-between">
-      <img src="{{backendUrl}}{{ category.icon }}" alt="logo.png" width="38">
-      {{category.logo}}
-      <span>{{category.name}}</span>
+      <div>
+        <img src="{{backendUrl}}{{ category.icon }}" alt="logo.png" width="38">
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+            (click)="openUpdateCategoryLogoModal(category)"></i>
+        </span>
+      </div>
       <span>
-        <abbr *ngIf="!category.isActive">
-          <i class="fa fa-trash        bg-white p-1 rounded m-1" style="font-size: 21px!important;"
-            (click)="openDeleteModal(category.id, category.name)"></i>
-          <i class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
-            (click)="openEnableDisableModal(category.id, category.name, category.isActive)"></i>
-        </abbr>
-        <abbr *ngIf="category.isActive"
-          (click)="openEnableDisableModal(category.id, category.name, category.isActive)"><i
-            class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+        {{category.name}}
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+            (click)="openUpdateCategoryNameModal(category)"></i>
+        </span>
+      </span>
+      <span>
+        <i class="fa fa-list        bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+          (click)="openServiceTypesListModal(category.serviceTypes)"></i>
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <abbr *ngIf="!category.isActive">
+            <i class="fa fa-trash        bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="openDeleteModal(category.id, category.name)"></i>
+            <i class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="openEnableDisableModal(category.id, category.name, category.isActive)"></i>
+          </abbr>
+          <abbr *ngIf="category.isActive"
+            (click)="openEnableDisableModal(category.id, category.name, category.isActive)"><i
+              class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+        </span>
       </span>
 
     </div>

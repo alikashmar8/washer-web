@@ -102,6 +102,7 @@ export class NewEmployeeModalComponent implements OnInit {
         console.log(data);
         this.alertService.toastSuccess('Employee Added Successfully');
         this.isStoreLoading = false;
+        window.location.reload();
       },
       error: (error) => {
         console.log(error);

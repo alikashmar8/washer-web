@@ -5,5 +5,5 @@ export class CreateAddressDto {
   building: string;
   description: string;
   lat: number;
-  long: number;
+  lon: number;
 }

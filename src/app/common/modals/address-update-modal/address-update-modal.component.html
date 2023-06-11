@@ -1,0 +1,58 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;" *ngIf="!isLoading">
+  <div class="card-body">
+    <h2 class="card-title text-center" translate>Edit Address</h2>
+    <form class="form-signin" (ngSubmit)="update()">
+
+      <div class="form-label-group m-4">
+        <label class="required">City:</label>
+        <input type="text" name="city" id="city" [(ngModel)]="address.city" class="form-control common-input px-3"
+          placeholder="Beirut" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Region:</label>
+        <input type="text" name="region" id="region" [(ngModel)]="address.region" class="form-control common-input px-3"
+          placeholder="Al Hara" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Street:</label>
+        <input type="text" name="street" id="street" [(ngModel)]="address.street" class="form-control common-input px-3"
+          placeholder="Al Hamra Street" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Building:</label>
+        <input type="text" name="building" id="building" [(ngModel)]="address.building"
+          class="form-control common-input px-3" placeholder="Towers Block C" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Address Description:</label>
+        <input type="text" name="addressDescription" id="addressDescription" [(ngModel)]="address.description"
+          class="form-control common-input px-3" placeholder="Beirut, Lebanon" required autofocus />
+      </div>
+
+      <div class="form-label-group m-2 row">
+        <div class="col-sm-6">
+          <label class="required">Latitude:</label>
+          <input type="number" name="latitude" id="latitude" [(ngModel)]="address.lat" class="form-control common-input"
+            placeholder="33.3354" required autofocus />
+        </div>
+        <div class="col-sm-6">
+          <label class="required">Longitude:</label>
+          <input type="number" name="longitude" id="longitude" [(ngModel)]="address.lon"
+            class="form-control common-input" placeholder="34.5372" required autofocus />
+        </div>
+      </div>
+
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isUpdateLoading">
+          <span *ngIf="!isUpdateLoading" translate>Update</span>
+          <img src="{{ loadingGif }}" *ngIf="isUpdateLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

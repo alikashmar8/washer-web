@@ -9,10 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class IndexComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {
-    debugger
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['home']);
-    } else {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['login']);
     }
   }

@@ -1,3 +1,5 @@
+import { EmployeeRole } from './../../../common/enums/employee-role.enum';
+import { ListServiceTypesModal } from './../../common/modals/list-service-types-modal/list-service-types-modal.component';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalComponent } from 'src/app/common/modals/delete-modal/delete-modal.component';
@@ -6,9 +8,11 @@ import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ServiceCategoriesService } from 'src/app/services/service-categories.service';
-import { backendUrl } from 'src/constants/api-constants';
+import { InputType } from 'src/common/enums/input-type.enum';
+import { backendUrl, mediaRoot } from 'src/constants/api-constants';
 import { Employee } from 'src/models/employee.model';
 import { ServiceCategory } from 'src/models/service-category.model';
+import { ServiceType } from 'src/models/service-type.model';
 
 @Component({
   selector: 'app-service-categories',
@@ -24,6 +28,7 @@ export class ServiceCategoriesComponent implements OnInit {
   take: number = 10;
   totalPages: number = 1;
   backendUrl = backendUrl;
+  EmployeeRole = EmployeeRole;
 
   filters: {
     search: string;
@@ -97,10 +102,10 @@ export class ServiceCategoriesComponent implements OnInit {
           this.serviceCategoriesService.delete(categoryId).subscribe(
             (result: any) => {
               if (result.affected > 0) {
-                this.alertService.toastSuccess('Branch deleted successfully');
+                this.alertService.toastSuccess('Category deleted successfully');
                 window.location.reload();
               } else {
-                this.alertService.toastError('Error deleting branch');
+                this.alertService.toastError('Error deleting category');
               }
             },
             (error) => {
@@ -111,6 +116,13 @@ export class ServiceCategoriesComponent implements OnInit {
       },
       (rejected) => {}
     );
+  }
+
+  openServiceTypesListModal(serviceTypes: ServiceType[]) {
+    const modalRef = this.modalService.open(ListServiceTypesModal, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.serviceTypes = serviceTypes;
   }
 
   openEnableDisableModal(id: string, name: string, isActive: boolean) {
@@ -132,6 +144,54 @@ export class ServiceCategoriesComponent implements OnInit {
         },
         (error) => {
           this.authService.handleHttpError(error);
+        }
+      );
+    }
+  }
+
+  async openUpdateCategoryNameModal(category: ServiceCategory) {
+    const res: string = await this.alertService.dynamicInputDialog({
+      value: category.name,
+      inputType: InputType.TEXT,
+      options: [],
+    });
+
+    if (res && res != category.name) {
+      this.serviceCategoriesService
+        .update(category.id, {
+          name: res,
+        })
+        .subscribe(
+          (response) => {
+            this.alertService.toastSuccess('Category updated successfully');
+            category.name = res;
+          },
+          (exception) => {
+            this.alertService.toastError('Error updating service category');
+            this.authService.handleHttpError(exception);
+          }
+        );
+    }
+  }
+
+  async openUpdateCategoryLogoModal(category: ServiceCategory) {
+    const res: any = await this.alertService.dynamicInputDialog({
+      value: mediaRoot + category.icon,
+      inputType: InputType.IMAGE,
+      options: [],
+    });
+
+    if (res) {
+      let data = new FormData();
+      data.append('icon', res, res.name);
+      this.serviceCategoriesService.update(category.id, data).subscribe(
+        (response) => {
+          this.alertService.toastSuccess('Category updated successfully');
+          window.location.reload();
+        },
+        (exception) => {
+          this.alertService.toastError('Error updating service category');
+          this.authService.handleHttpError(exception);
         }
       );
     }

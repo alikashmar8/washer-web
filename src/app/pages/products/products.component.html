@@ -1,0 +1,103 @@
+<div *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-sm-8">
+      <h3>Products:</h3>
+    </div>
+    <div class="col-sm-4">
+      total: {{count}}
+    </div>
+  </div>
+  <hr class="m-2">
+  <div class="row form-group">
+    <div class="col-md-1">
+      <div class="mt-2 h6">Search:</div>
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control" name="search" [(ngModel)]="filters.search">
+    </div>
+    <div class="col-md-1">
+      <i class="fa fa-search mt-2" aria-hidden="true" (click)="getPageRecords(1)"></i>
+    </div>
+
+    <span class="col-sm-3" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+      <a class="btn btn-success" routerLink="/products/create">
+        Add New
+      </a>
+    </span>
+  </div>
+  <hr>
+  <div *ngIf="products.length">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of products ; let i = index">
+        <div class="card">
+          <!-- <span class="off bg-dark">-25% OFF</span> -->
+          <div class="text-center p-4">
+            <img id="product-{{product.id}}-image"
+              [src]="mediaRoot + (product.images && product.images.length ? product.images[0].image: '')" width="300" />
+          </div>
+          <div class="thumbnail text-center">
+            <img *ngFor="let image of product.images"
+              (click)="changeImage('product-' +product.id +'-image', $event.target)" [src]="mediaRoot + image.image"
+              width="70">
+          </div>
+          <div class="about text-center">
+            <h6>{{product.title}}</h6> <span>{{product.price}}</span>
+          </div>
+          <div class="cart-button mt-3 px-2 d-flex justify-content-between align-items-center">
+            <button class="btn btn-dark text-uppercase" (click)="showProductDetails(product)">Show More</button>
+            <div class="add" *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+              <span class="product_fav">
+                <i class="fa fa-pen text-warning" routerLink="/products/{{product.id}}/edit"></i>
+              </span>
+              <span class="product_fav">
+                <i class="fa fa-trash text-danger" (click)="deleteProduct(product.id)"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <!--delete modal-->
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Delete Product</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <div>Are you sure you want to delete this product?</div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')">
+              Cancel
+            </button>
+
+            <button type="button" class="btn btn-danger" (click)="delete()" [disabled]="isDeleteLoading">
+              <img *ngIf="isDeleteLoading" src="{{ loadingGifUrl }}" width="22px" />
+              <span *ngIf="!isDeleteLoading">Delete</span>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row w-100">
+      <div class="col-md-10">
+        <ul class="pagination ">
+          <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+            *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+            <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!products.length">
+    <h3 class="col-md-12 px-5 center-elements" translate> No product available!</h3>
+  </div>
+</div>

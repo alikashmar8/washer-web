@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Ads:</h3>
+  </div>
+  <div class="col-sm-4">
+    total: {{count}}
+  </div>
+</div>
+<hr class="m-2">
+<div class="row form-group">
+  <div class="col-md-1">
+    <div class="mt-2 h6">Search:</div>
+  </div>
+  <div class="col-md-6">
+    <input type="text" class="form-control" name="search" [(ngModel)]="filters.search">
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-search mt-2" aria-hidden="true" (click)="getPageRecords(1)"></i>
+  </div>
+
+  <span class="col-sm-3">
+    <button class="btn btn-success" (click)="openNewAdModal()">
+      Add New
+    </button>
+  </span>
+</div>
+<hr>
+
+<div *ngIf="ads.length">
+
+  <div *ngFor="let ad of ads ; let i = index">
+    <hr>
+    <div [ngClass]="{
+        'alert-info': ad.isActive,
+        'alert-danger': !ad.isActive
+      }" class="alert d-flex justify-content-between">
+      <div>
+        <img src="{{backendUrl}}{{ ad.image }}" alt="logo.png" width="38">
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <!-- <i class="fa fa-pencil border rounded p-2 mx-2" aria-hidden="true"
+            (click)="openUpdateAdModal(ad)"></i> -->
+        </span>
+      </div>
+      <span>
+        {{ad.title}}
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <!-- <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+            (click)="openUpdateCategoryNameModal(category)"></i> -->
+        </span>
+      </span>
+      <span>
+        <!-- <i class="fa fa-list        bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+          (click)="openServiceTypesListModal(category.serviceTypes)"></i> -->
+        <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <abbr *ngIf="!ad.isActive">
+            <i class="fa fa-trash bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="openDeleteModal(ad.id, ad.title)"></i>
+            <i class="fa fa-check-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"
+              (click)="openEnableDisableModal(ad.id, ad.title, ad.isActive)"></i>
+          </abbr>
+          <abbr *ngIf="ad.isActive" (click)="openEnableDisableModal(ad.id, ad.title, ad.isActive)"><i
+              class="fa fa-minus-circle bg-white p-1 rounded m-1" style="font-size: 21px!important;"></i></abbr>
+        </span>
+      </span>
+
+    </div>
+  </div>
+  <div class="row w-100">
+    <div class="col-md-10">
+      <ul class="pagination ">
+        <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+          *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+          <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="row m-5 p-5 alert-danger" *ngIf="!ads.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No ads available!</h3>
+</div>

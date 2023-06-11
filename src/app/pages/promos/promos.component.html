@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Promo Codes:</h3>
+  </div>
+  <div class="col-sm-4">
+    total: {{count}}
+  </div>
+</div>
+<hr class="m-2">
+<div class="row form-group">
+  <div class="col-md-1">
+    <div class="mt-2 h6">Search:</div>
+  </div>
+  <div class="col-md-6">
+    <input type="text" class="form-control" name="search" [(ngModel)]="filters.search">
+  </div>
+  <div class="col-md-1">
+    <i class="fa fa-search mt-2" aria-hidden="true" (click)="getPageRecords(1)"></i>
+  </div>
+
+  <span class="col-sm-3">
+    <button class="btn btn-success" (click)="openNewPromoModal()">
+      Add New
+    </button>
+  </span>
+</div>
+<hr>
+
+<div *ngIf="promos.length">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>User</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let promo of promos ; let i = index" [ngClass]="{'bg-danger': !promo.isActive}">
+        <td>{{promo.code}}</td>
+        <td>{{promo.user.firstName}} {{promo.user.lastName}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row w-100">
+    <div class="col-md-10">
+      <ul class="pagination ">
+        <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+          *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+          <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="row m-5 p-5 alert-danger" *ngIf="!promos.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No promos available!</h3>
+</div>

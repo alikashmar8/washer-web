@@ -1,0 +1,68 @@
+<app-loading-screen *ngIf="isLoading"></app-loading-screen>
+<div *ngIf="!isLoading">
+  <div class="row m-5 container">
+    <div class="col-md-4 my-5">
+      <h1>All Categories:</h1>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4 my-5 float-right">
+      <button class="btn btn-success" routerLink="/categories/create"
+        *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+        Add new
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="categories[0]" class="row">
+    <ul class="list-group col-md-4 mx-auto">
+      <li *ngFor="let category of categories; let i = index"
+        class="list-group-item d-flex justify-content-between align-items-center m-2">
+        <span [ngClass]="{
+          'alert-info': category.isActive,
+          'alert-danger': !category.isActive
+        }">
+          <strong style="margin-right: 20px">{{ i + 1 }} -</strong>
+          {{ category.name }}
+        </span>
+        <span class="badge badge-primary badge-pill" *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+          <button class="btn btn-primary mx-2" routerLink="/categories/edit/{{ category.id }}">
+            Edit
+          </button>
+          <button class="btn btn-danger" (click)="open(content, category.id)">
+            Delete
+          </button>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!categories[0]" class="m-5">
+    <H1 class="alert alert-danger">No Categories Found!</H1>
+  </div>
+</div>
+
+<!--delete modal-->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Category</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div>Are you sure you want to delete this category?</div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')">
+      Cancel
+    </button>
+
+    <button type="button" class="btn btn-danger" (click)="delete()" [disabled]="isDeleteLoading">
+      <img *ngIf="isDeleteLoading" src="{{ loadingGifUrl }}" width="22px" />
+      <span *ngIf="!isDeleteLoading">Delete</span>
+    </button>
+  </div>
+</ng-template>

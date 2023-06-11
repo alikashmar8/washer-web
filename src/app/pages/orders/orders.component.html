@@ -1,0 +1,109 @@
+<app-loading-screen *ngIf="isLoading"></app-loading-screen>
+<div *ngIf="!isLoading">
+  <div class="row m-3 pt-4">
+    <div class="col-md-4">
+      <h2>All Orders:</h2>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">orders count: {{ count }}</div>
+  </div>
+  <div class="position-relative">
+    <span class="position-absolute search" (click)="getPageRecords(1)"><i class="fa fa-search"></i></span>
+    <input [(ngModel)]="filters.search" (keyup.enter)="getPageRecords(1)" class="form-control w-100"
+      placeholder="Search by order#, user, status...">
+  </div>
+
+  <div *ngIf="count>0">
+    <div class="container mt-5 px-2">
+
+      <div class="mb-2 d-flex justify-content-between align-items-center">
+
+
+        <!-- <div class="px-2">
+          <span>Filters <i class="fa fa-angle-down"></i></span>
+          <i class="fa fa-ellipsis-h ms-3"></i>
+        </div> -->
+
+      </div>
+      <div class="table-responsive">
+        <table class="table table-responsive table-borderless">
+
+          <thead>
+            <tr class="bg-light">
+              <th scope="col" width="5%">#</th>
+              <th scope="col" width="20%">Customer</th>
+              <th scope="col" width="10%">Status</th>
+              <th scope="col" width="20%"><span>Total Amount</span></th>
+              <th scope="col" width="20%">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td>{{order.id}}</td>
+              <td>{{order.user.firstName}} {{order.user.lastName}}</td>
+              <td>
+                <span [ngClass]="{
+                    'text-success':  order.status == OrderStatus.DELIVERED,
+                    'text-info': order.status == OrderStatus.REVIEWED || order.status == OrderStatus.CONFIRMED ,
+                    'text-warning':order.status ==  OrderStatus.PENDING,
+                    'text-danger': order.status == OrderStatus.CANCELLED || order.status == OrderStatus.REJECTED
+                  } ">
+                  {{order.status}}
+                  <span *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
+                    <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+                      (click)="openUpdateStatusModal(order)"></i>
+                  </span>
+                </span>
+              </td>
+              <td><span class="fw-bolder">{{order.total}}</span></td>
+              <td>{{order.createdAt | date:'yyyy-MM-dd HH:mm a'}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row w-100">
+          <div class="col-md-10">
+            <ul class="pagination ">
+              <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+                *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+                <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="count <= 0">
+    <div class="aler alert-danger">
+      <h4>No orders available!</h4>
+    </div>
+  </div>
+</div>
+
+<!--delete modal-->
+<ng-template #content let-modal>
+  <div class="modal-header mt-5">
+    <h4 class="modal-title" id="modal-basic-title">Delete Order</h4>
+    <button type="button" class="close btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div>Are you sure you want to delete this order?</div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')">
+      Cancel
+    </button>
+
+    <button type="button" class="btn btn-danger" (click)="delete()" [disabled]="isDeleteLoading">
+      <img *ngIf="isDeleteLoading" src="{{ loadingGifUrl }}" width="22px" />
+      <span *ngIf="!isDeleteLoading">Delete</span>
+    </button>
+  </div>
+</ng-template>

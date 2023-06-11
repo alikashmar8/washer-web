@@ -32,8 +32,11 @@
     <hr>
     <div class="alert alert-info d-flex justify-content-between">{{branch.description}} <span>-</span>
       {{branch.address.description}} <span>-</span> Lat: {{branch.address.lat}}
-      <span>-</span> Long: {{branch.address.long}} <span>-</span> <i class="fa fa-trash text-danger mt-1"
-        (click)="openDeleteModal(branch.id, branch.description)"></i>
+      <span>-</span> Long: {{branch.address.lon}} <span>-</span>
+      <i class="fa fa-trash text-danger mt-1" (click)="openDeleteModal(branch.id, branch.description)"></i>
+      <a routerLink="/branches/{{branch.id}}">
+      <i class="fa fa-eye text-secondary mt-1"  ></i>
+      </a>
     </div>
   </div>
   <div class="row w-100">

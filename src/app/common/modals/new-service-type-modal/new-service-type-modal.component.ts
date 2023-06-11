@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,6 +16,7 @@ import { ServiceCategory } from 'src/models/service-category.model';
   styleUrls: ['./new-service-type-modal.component.css'],
 })
 export class NewServiceTypeModalComponent implements OnInit {
+  @Input() categoryId;
   currentEmployee: Employee;
   type: CreateServiceTypeDto = {
     name: null,
@@ -49,6 +50,7 @@ export class NewServiceTypeModalComponent implements OnInit {
     try {
       let res = await this.serviceCategoriesService.getAll(99, 0);
       this.serviceCategories = res.data;
+      this.type.categoryId = this.categoryId;
       this.count = res.count;
     } catch (err) {
       this.authService.handleHttpError(err);

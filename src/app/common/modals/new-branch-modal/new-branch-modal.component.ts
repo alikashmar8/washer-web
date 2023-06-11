@@ -22,7 +22,7 @@ export class NewBranchModalComponent implements OnInit {
       street: null,
       building: null,
       lat: null,
-      long: null,
+      lon: null,
       description: null,
     },
   };
@@ -75,7 +75,7 @@ export class NewBranchModalComponent implements OnInit {
       return;
     }
 
-    if (!this.branch.address.long || !this.branch.address.lat) {
+    if (!this.branch.address.lon || !this.branch.address.lat) {
       this.alertService.toastError(
         'Branch latitude and longitude should be filled!'
       );

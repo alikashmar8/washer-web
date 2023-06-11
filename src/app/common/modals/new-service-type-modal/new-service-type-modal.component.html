@@ -4,7 +4,7 @@
     <form class="form-signin" (ngSubmit)="store()">
 
 
-      <div class="form-label-group m-4">
+      <div class="form-label-group m-4" *ngIf="!categoryId">
         <label>Service Category:</label>
         <select [(ngModel)]="type.categoryId" class="form-control" name="role">
           <option *ngFor="let category of serviceCategories" [value]="category.id">{{category.name}}</option>

@@ -20,12 +20,12 @@
     </button> -->
   </span>
 </div>
-<hr>
 
-<div class="row" *ngIf="displayFilters">
+<div class="row border rounded p-2 m-2" *ngIf="displayFilters">
   <div class="col-md-4">
     <label>Search</label>
-    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filters.search">
+    <input type="text" class="form-control" placeholder="Search by request ID, customer, employee ..."
+      [(ngModel)]="filters.search">
   </div>
   <div class="col-md-4" *ngIf="[EmployeeRole.ADMIN].includes(currentEmployee.role)">
     <label>Branch</label>
@@ -36,9 +36,21 @@
   <div class="col-md-4">
     <label>Status:</label>
     <select class="form-control" name="role" [(ngModel)]="filters.status">
-      <option [value]="EmployeeRole.BRANCH_EMPLOYEE">{{EmployeeRole.BRANCH_EMPLOYEE}}</option>
-      <option [value]="EmployeeRole.DRIVER" selected="selected">{{EmployeeRole.DRIVER}}</option>
+      <option [value]="RequestStatus.PENDING_APPROVAL">{{RequestStatus.PENDING_APPROVAL}}</option>
+      <option [value]="RequestStatus.APPROVED">{{RequestStatus.APPROVED}}</option>
+      <option [value]="RequestStatus.IN_PROGRESS">{{RequestStatus.IN_PROGRESS}}</option>
+      <option [value]="RequestStatus.DONE">{{RequestStatus.DONE}}</option>
+      <option [value]="RequestStatus.CANCELLED">{{RequestStatus.CANCELLED}}</option>
+      <option [value]="RequestStatus.REJECTED">{{RequestStatus.REJECTED}}</option>
     </select>
+  </div>
+  <div class="col-md-4">
+    <label>From Date:</label>
+    <input type="date" name="fromDate" id="fromDate" class="form-control" [(ngModel)]="filters.fromDate">
+  </div>
+  <div class="col-md-4">
+    <label>To Date:</label>
+    <input type="date" name="toDate" id="toDate" class="form-control" [(ngModel)]="filters.toDate">
   </div>
   <div class="col-md-4">
     <label>Is Paid?</label>
@@ -57,10 +69,54 @@
     </button>
   </div>
 </div>
+<hr>
 <div *ngIf="serviceRequests.length">
-  <tr *ngFor="let request of serviceRequests; let i = index">
-    {{request.id}}
-  </tr>
+  <table class="table bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Is Paid?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of serviceRequests; let i = index">
+        <td>
+          <a routerLink="/service-requests/{{request.id}}">{{request.id}}</a></td>
+        <td>{{request.user.firstName}} {{request.user.lastName}}</td>
+        <td>{{request.type.category.name}} - {{request.type.name}}</td>
+        <td [ngClass]="{
+          'text-success': request.status == RequestStatus.DONE || request.status ==  RequestStatus.APPROVED,
+          'text-info': request.status == RequestStatus.IN_PROGRESS,
+          'text-warning':request.status ==  RequestStatus.PENDING_APPROVAL,
+          'text-danger': request.status == RequestStatus.CANCELLED || request.status == RequestStatus.REJECTED
+        }">
+          {{request.status}}
+          <span
+            *ngIf="[RequestStatus.PENDING_APPROVAL, RequestStatus.APPROVED, RequestStatus.IN_PROGRESS ].includes(request.status)">
+            <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openUpdateStatusModal(request)"></i>
+          </span>
+        </td>
+        <td>{{request.cost + request.tips}}</td>
+        <td [ngClass]="{
+          'text-success': request.isPaid,
+          'text-danger': !request.isPaid
+        }">
+          {{request.isPaid}}
+          <i class="fa fa-repeat border rounded p-2" aria-hidden="true" (click)="switchPaidUnpaid(request)"></i>
+          <div id="map">
+              <!-- <iframe width="300" height="170" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://maps.google.com/maps?q=33.853032,35.503830&hl=en&z=14&amp;output=embed"></iframe> -->
+
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
   <div class="row w-100">
     <div class="col-md-10">
       <ul class="pagination ">

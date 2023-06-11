@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Product Details</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Title</h5>
+      {{product.title}}
+    </div>
+    <div class="col-md-6">
+      <h5>Description</h5>
+      {{product.description}}
+    </div>
+    <div class="col-md-6">
+      <h5>Category</h5>
+      {{product.category? product.category.name : 'N/A' }}
+    </div>
+    <div class="col-md-6">
+      <h5>Price</h5>
+      {{product.price}}
+    </div>
+    <div class="col-md-6">
+      <h5>Views Count:</h5>
+      {{product.views}}
+    </div>
+    <div class="col-md-6">
+      <h5>Is Active?</h5>
+      <!-- {{product.isActive}} -->
+    </div>
+    <div class="col-md-6">
+      <h5>Created At</h5>
+      <!-- angular html date pipe example?? -->
+      {{product.createdAt | date}}
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
+</div>

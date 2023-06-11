@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ChangeRequestStatusModalComponent } from 'src/app/common/modals/change-request-status-modal/change-request-status-modal.component';
+import { UpdateRequestStatusModal } from 'src/app/common/modals/update-request-status-modal/update-request-status-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ServiceRequestsService } from 'src/app/services/service-requests.service';
 import { ServiceTypesService } from 'src/app/services/service-types.service';
+import { EmployeeRole } from 'src/common/enums/employee-role.enum';
 import { PaymentType } from 'src/common/enums/payment-type.enum';
 import { RequestStatus } from 'src/common/enums/request-status.enum';
 import { Branch } from 'src/models/branch.model';
 import { Employee } from 'src/models/employee.model';
 import { ServiceRequest } from 'src/models/service-request.model';
 import { ServiceType } from 'src/models/service-type.model';
+import { AlertService } from './../../services/alert.service';
 
 @Component({
   selector: 'app-service-requests',
@@ -32,7 +34,8 @@ export class ServiceRequestsComponent implements OnInit {
   take: number = 10;
   totalPages: number = 1;
   displayFilters: boolean = false;
-
+  EmployeeRole = EmployeeRole;
+  RequestStatus = RequestStatus;
   filters: {
     search: string;
     branchId: string;
@@ -62,7 +65,8 @@ export class ServiceRequestsComponent implements OnInit {
     private loadingService: LoadingService,
     private serviceRequestsService: ServiceRequestsService,
     private serviceTypesService: ServiceTypesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private alertService: AlertService
   ) {
     this.currentEmployee = this.authService.currentEmployee;
   }
@@ -117,26 +121,49 @@ export class ServiceRequestsComponent implements OnInit {
     this.displayFilters = !this.displayFilters;
   }
 
-  openEnableDisableModal(id: string, currentStatus: RequestStatus) {
-    let res;
-    const modalRef = this.modalService.open(ChangeRequestStatusModalComponent);
-    modalRef.componentInstance.id = id;
-    modalRef.componentInstance.currentStatus = currentStatus;
-  //   modalRef.result.then(
-  //   if (res) {
-  //     this.serviceTypesService.changeStatus(id, !isActive).subscribe(
-  //       (result: any) => {
-  //         if (result.affected > 0) {
-  //           this.alertService.toastSuccess('Operation successful');
-  //           window.location.reload();
-  //         } else {
-  //           this.alertService.toastError('Error');
-  //         }
-  //       },
-  //       (error) => {
-  //         this.authService.handleHttpError(error);
-  //       }
-  //     );
-  //   }
+  openUpdateStatusModal(serviceRequest: ServiceRequest) {
+    const modalRef = this.modalService.open(UpdateRequestStatusModal);
+    modalRef.componentInstance.serviceRequest = serviceRequest;
+    //   modalRef.result.then(
+    //   if (res) {
+    //     this.serviceTypesService.changeStatus(id, !isActive).subscribe(
+    //       (result: any) => {
+    //         if (result.affected > 0) {
+    //           this.alertService.toastSuccess('Operation successful');
+    //           window.location.reload();
+    //         } else {
+    //           this.alertService.toastError('Error');
+    //         }
+    //       },
+    //       (error) => {
+    //         this.authService.handleHttpError(error);
+    //       }
+    //     );
+    //   }
+  }
+
+  switchPaidUnpaid(request: ServiceRequest) {
+    let message = request.isPaid
+      ? 'Are you sure you want to make this request as unpaid ?'
+      : 'Are you sure you want to make this request as paid ?';
+
+    const confirmed = confirm(message);
+    if (confirmed) {
+      this.serviceRequestsService
+        .updatePaymentStatus(request.id, !request.isPaid)
+        .subscribe(
+          (res: any) => {
+            if (res && res.affected > 0) {
+              this.alertService.toastSuccess('request updated successfully');
+              request.isPaid = !request.isPaid;
+            } else {
+              this.alertService.toastError('Error updating payment');
+            }
+          },
+          (error) => {
+            this.authService.handleHttpError(error);
+          }
+        );
+    }
   }
 }

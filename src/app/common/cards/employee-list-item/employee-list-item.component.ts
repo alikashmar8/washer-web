@@ -55,6 +55,6 @@ export class EmployeeListItemComponent implements OnInit {
 
   openDetailModal(employee) {
     const modalRef = this.modalService.open(ShowEmployeeModal, { size: 'lg' });
-    modalRef.componentInstance.employee = employee;
+    modalRef.componentInstance.employee = this.employee;
   }
 }

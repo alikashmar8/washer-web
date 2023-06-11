@@ -1,0 +1,52 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;" *ngIf="!isLoading">
+  <div class="card-body">
+    <h2 class="card-title text-center" translate>Add a new Promo Code</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+
+
+      <div class="form-label-group m-4" *ngIf="!userId">
+        <label>User:</label>
+        <select [(ngModel)]="promo.userId" name="userId" class="form-control" name="role">
+          <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+        </select>
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Code:</label>
+        <input type="text" name="code" id="code" [(ngModel)]="promo.code" class="form-control common-input px-3"
+          placeholder="Code" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Discount Amount:</label>
+        <input type="number" name="discountAmount" id="discountAmount" [(ngModel)]="promo.discountAmount"
+          class="form-control common-input px-3" placeholder="0.0" autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Discount Percentage:</label>
+        <input type="number" name="discountPercentage" id="discountPercentage" [(ngModel)]="promo.discountPercentage"
+          class="form-control common-input px-3" placeholder="0.0" autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Limit:</label>
+        <input type="number" name="limit" id="limit" [(ngModel)]="promo.limit" class="form-control common-input px-3"
+          placeholder="0.0" autofocus />
+      </div>
+
+
+      <div class="form-label-group m-4">
+        <label>Expiry Date:</label>
+        <input type="date" name="expiryDate" id="expiryDate" class="form-control" [(ngModel)]="promo.expiryDate">
+      </div>
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading" translate>Add</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

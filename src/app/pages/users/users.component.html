@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Users:</h3>
+  </div>
+  <div class="col-sm-4">
+    total: {{count}}
+  </div>
+</div>
+<hr class="m-2">
+<div class="row form-group ml-2">
+  <div class="col-md-1">
+    <button class="btn btn-primary" (click)="showHideFilters()">
+      <i class="fa fa-filter"></i>
+    </button>
+  </div>
+</div>
+<hr>
+
+<div class="row my-2" *ngIf="displayFilters">
+  <div class="col-md-4">
+    <label>Search</label>
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filters.search">
+  </div>
+  <div class="col-md-4">
+    <label>Is Active?</label>
+    <select class="form-control" [(ngModel)]="filters.isActive">
+      <option value="true">
+        true
+      </option>
+      <option value="false">
+        false
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-primary mt-4" (click)="getPageRecords(1)">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+<div *ngIf="users.length" class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Referral Code</th>
+        <th>Email Verified?</th>
+        <th>Mobile Verified?</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let user of users | filter: search; let i = index">
+        <a routerLink="/users/{{user.id}}" style="display: contents;">
+          <td>{{ user.id }}</td>
+          <td>{{ user.firstName }} {{ user.lastName }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.referralCode }}</td>
+          <td>{{ user.isEmailVerified }}</td>
+          <td>{{ user.isMobileVerified }}</td>
+          <td>{{ user.createdAt | date }}</td>
+        </a>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row w-100">
+    <div class="col-md-10">
+      <ul class="pagination ">
+        <li class="page-item" [ngClass]="{'active': i+1 == currentPage }"
+          *ngFor='let in of counter(totalPages);let i = index' (click)="getPageRecords(i+1)">
+          <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="row m-5 p-5 alert-danger" *ngIf="!users.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No users available!</h3>
+</div>

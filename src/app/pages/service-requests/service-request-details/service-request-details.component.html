@@ -1,0 +1,97 @@
+<div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
+  <h5><strong>General Details:</strong></h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <h6><strong>Request ID:</strong></h6>
+      {{serviceRequest.id}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Status:</strong></h6>
+      {{serviceRequest.status}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Customer:</strong></h6>
+      {{serviceRequest.user.firstName}} {{serviceRequest.user.lastName}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Created At:</strong></h6>
+      {{serviceRequest.createdAt}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Requested Date:</strong></h6>
+      {{serviceRequest.requestedDate}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Confirmed Date:</strong></h6>
+      {{serviceRequest.confirmedDate}}
+      <button class="btn btn-secondary" (click)="confirmNow()">Confirm Now</button>
+    </div>
+  </div>
+</div>
+<div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
+  <h5><strong>Service Details:</strong></h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <h6><strong>Service:</strong></h6>
+      {{serviceRequest.type.name}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Quantity:</strong></h6>
+      {{serviceRequest.quantity}}
+    </div>
+    <div class="col-md-12 p-1" *ngIf="serviceRequest.vehicle">
+      <h6><strong>Vehicle:</strong></h6>
+      {{serviceRequest.vehicle.branch}}, {{serviceRequest.vehicle.model}}, {{serviceRequest.vehicle.color}},
+      <strong>Plate NB: </strong> {{serviceRequest.vehicle.plateSymbol}} {{serviceRequest.vehicle.plateNumber}}
+    </div>
+  </div>
+</div>
+<div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
+  <h5><strong>Payment Details:</strong></h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <h6><strong>Total:</strong><small>(including tips)</small></h6>
+      {{serviceRequest.cost}} LBP
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Tips:</strong></h6>
+      {{serviceRequest.tips}} LBP
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Payment Type:</strong></h6>
+      {{serviceRequest.paymentType}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Is Paid?</strong></h6>
+      {{serviceRequest.isPaid}}
+    </div>
+  </div>
+</div>
+<div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
+  <h5><strong>Process Details:</strong></h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <h6><strong>Branch:</strong></h6>
+      {{serviceRequest.branch?.description}}
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Employee:</strong></h6>
+      {{serviceRequest.employee?.firstName}} {{serviceRequest.employee?.lastName}}
+      <br>
+      <button class="btn btn-secondary" (click)="assignEmployee()">Assign new employee</button>
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Customer Address:</strong></h6>
+      {{serviceRequest.address.city}}, {{serviceRequest.address.region}}, {{serviceRequest.address.street}},
+      {{serviceRequest.address.building}}
+      <br>
+      <small>({{serviceRequest.address.description}})</small>
+      <iframe width="100%" height="170" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0"
+        [src]="'https://maps.google.com/maps?q=' + serviceRequest.address.lat + ',' + serviceRequest.address.lon + '&hl=en&z=17&iwstate1=sscorrectthiscard&output=embed' | safe: 'resourceUrl'"></iframe>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="container border rounded p-4 m-4" *ngIf="branch">
+  <h5><strong>Details:</strong></h5>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <h6><strong>Name:</strong></h6>
+      {{branch.description}}
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openEditDescription()"></i>
+    </div>
+    <div class="col-md-6 p-1">
+      <h6><strong>Is Active?</strong></h6>
+      <div [ngClass]="{
+        'text-success': branch.isActive,
+        'text-danger': !branch.isActive
+        }">
+        {{branch.isActive}}
+      </div>
+      <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openEditIsActive()"></i>
+    </div>
+    <div class="col-md-12 p-1">
+      <h6><strong>Address:</strong></h6>
+      <div class="mb-3">
+        {{branch.address.city}}, {{branch.address.region}}, {{branch.address.street}}, {{branch.address.building}}
+        <br>
+        <small>({{branch.address.description}})</small>
+        <i class="fa fa-pencil border rounded p-2" aria-hidden="true" (click)="openAddressEdit()"></i>
+      </div>
+      <div class="" *ngIf="mapLink">
+        <iframe width="100%" height="170" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0"
+          [src]="mapLink | safe: 'resourceUrl'"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container border rounded p-4 m-4" *ngIf="branch">
+  <h5><strong>Staff:</strong></h5>
+  <div *ngIf="branch.employees.length">
+    <div *ngFor="let employee of branch.employees | filter: search; let i = index">
+      <hr>
+      <app-employee-list-item [employee]='employee'></app-employee-list-item>
+    </div>
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!branch.employees.length">
+    <h3 class="col-md-12 px-5 center-elements"> No employees available!</h3>
+  </div>
+</div>
+
+<div class="container border rounded p-4 m-4">
+  <h5><strong>Service Requests:</strong></h5>
+  <div *ngIf="serviceRequests.length">
+    <table class="table bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Service</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Is Paid?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of serviceRequests; let i = index">
+          <td>{{request.id}}</td>
+          <td>{{request.user.firstName}} {{request.user.lastName}}</td>
+          <td>{{request.type.category.name}} - {{request.type.name}}</td>
+          <td [ngClass]="{
+          'text-success': request.status == RequestStatus.DONE || request.status ==  RequestStatus.APPROVED,
+          'text-info': request.status == RequestStatus.IN_PROGRESS,
+          'text-warning':request.status ==  RequestStatus.PENDING_APPROVAL,
+          'text-danger': request.status == RequestStatus.CANCELLED || request.status == RequestStatus.REJECTED
+        }">
+            {{request.status}}
+            <span
+              *ngIf="[RequestStatus.PENDING_APPROVAL, RequestStatus.APPROVED, RequestStatus.IN_PROGRESS ].includes(request.status)">
+              <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+                (click)="openUpdateStatusModal(request)"></i>
+            </span>
+          </td>
+          <td>{{request.cost + request.tips}}</td>
+          <td [ngClass]="{
+          'text-success': request.isPaid,
+          'text-danger': !request.isPaid
+        }">
+            {{request.isPaid}}
+            <i class="fa fa-repeat border rounded p-2" aria-hidden="true" (click)="switchPaidUnpaid(request)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row w-100">
+      <div class="col-md-10">
+        <ul class="pagination ">
+          <li class="page-item" [ngClass]="{'active': i+1 == currentRequestsPage }"
+            *ngFor='let in of counter(requestsTotalPages);let i = index' (click)="getPageRecords(i+1)">
+            <a href="javascript:void(0);" class="page-link">{{i+1}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div class="row m-5 p-5 alert-danger" *ngIf="!serviceRequests.length">
+    <h3 class="col-md-12 px-5 center-elements"> No requests placed yet!</h3>
+  </div>
+</div>

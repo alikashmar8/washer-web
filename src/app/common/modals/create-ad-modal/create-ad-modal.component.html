@@ -1,0 +1,32 @@
+<div class="card card-signin my-5" style="border: 0; margin: 0!important;">
+  <div class="card-body">
+    <h2 class="card-title text-center" translate>New Ad</h2>
+    <form class="form-signin" (ngSubmit)="store()">
+
+
+      <div class="form-label-group m-4">
+        <label>Title:</label>
+        <input type="text" name="title" id="title" [(ngModel)]="ad.title" class="form-control common-input px-3"
+          placeholder="Title" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label>Description:</label>
+        <input type="text" name="description" id="description" [(ngModel)]="ad.description"
+          class="form-control common-input px-3" placeholder="Description" autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label for="icon">Image: </label>
+        <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <button class="btn btn-lg btn-primary btn-block form-control text-uppercase" [disabled]="isStoreLoading">
+          <span *ngIf="!isStoreLoading" translate>Store</span>
+          <img src="{{ loadingGif }}" *ngIf="isStoreLoading" width="20px" />
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

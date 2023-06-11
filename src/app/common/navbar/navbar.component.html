@@ -11,6 +11,10 @@
           <a class="nav-link active" aria-current="page" routerLink="home"
             [ngClass]="{'active': isCurrentRoute('/home')}">Home</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="ads"
+            [ngClass]="{'active': isCurrentRoute('/ads')}">Ads</a>
+        </li>
         <li class="nav-item" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
           <a class="nav-link" routerLink="branches" [ngClass]="{'active': isCurrentRoute('/branches')}">Branches</a>
         </li>
@@ -28,17 +32,50 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" routerLink="service-types"
-                [ngClass]="{'active': isCurrentRoute('/service-types') }">Service Types</a></li>
+            <!-- <li>
+              <a class="dropdown-item" routerLink="service-types"
+                [ngClass]="{'active': isCurrentRoute('/service-types') }">Service Types</a>
+            </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> -->
             <li><a class="dropdown-item" routerLink="service-requests"
                 [ngClass]="{'active': isCurrentRoute('/service-requests') }">Service Requests</a></li>
           </ul>
         </li>
+
+        <!-- Inventory Section -->
+        <li class="nav-item dropdown" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            [ngClass]="{'active': (isCurrentRoute('/categories') || isCurrentRoute('orders') )}">
+            Inventory
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="categories"
+                [ngClass]="{'active': isCurrentRoute('/categories') }">Categories</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="products"
+                [ngClass]="{'active': isCurrentRoute('/products') }">Products</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" routerLink="orders"
+                [ngClass]="{'active': isCurrentRoute('/orders') }">Orders</a></li>
+          </ul>
+        </li>
+        <!-- END Inventory Section -->
+
+
+        <li class="nav-item" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+          <a class="nav-link" routerLink="users" [ngClass]="{'active': isCurrentRoute('/users')}">Users</a>
+        </li>
       </ul>
       <div class="d-flex" role="search">
+        <i class="fa fa-gear text-white m-auto border rounded p-3 mx-2" routerLink="settings"></i>
         <button class="btn btn-outline-danger" type="button" (click)="logout()">Logout</button>
       </div>
     </div>

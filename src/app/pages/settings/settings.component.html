@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Settings:</h3>
+  </div>
+  <div class="col-sm-4">
+  </div>
+</div>
+<div *ngIf="settings.length">
+  <div *ngFor="let setting of settings ; let i = index">
+    <hr>
+    <div class="row p-2">
+      <div class="col-md-4 bold"><strong>{{setting.key}}</strong></div>
+      <div class="col-md-4">{{setting.value}}</div>
+      <div class="col-md-1"><i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+          (click)="openUpdateModal(setting)"></i></div>
+    </div>
+  </div>
+</div>
+<!-- <div class="row m-5 p-5 alert-danger" *ngIf="!settings.length">
+  <h3 class="col-md-12 px-5 center-elements" translate> No settings configured!</h3>
+</div> -->
+
+<strong>
+  <hr class="my-5" style="border: none;height: 4px;color: #333;background-color: #333;">
+</strong>
+
+
+<div class="row">
+  <div class="col-sm-8">
+    <h3>Whatsapp Settings:</h3>
+  </div>
+  <div class="col-sm-4">
+  </div>
+
+  <div class="col-sm-8">
+    <h5>Whatsapp Status:</h5>
+  </div>
+  <div class="col-sm-4">
+    <h5 [ngStyle]="{
+      'color': isWhatsappActive  ? 'lime' : 'red'
+    }">{{ isWhatsappActive ? "ACTIVE" : "Inactive"}}</h5>
+  </div>
+  <hr>
+  <div class="col-sm-8">
+    <h5>Reset Whatsapp Configuration:</h5><small>(note that this will terminate any active sessions!)</small>
+  </div>
+  <div class="col-sm-4">
+    <button class="btn btn-danger" (click)="terminateWhatsapp()">Reset</button>
+  </div>
+  <hr>
+  <div *ngIf="!isWhatsappActive">
+    <h5>QrCode:</h5>
+    <small>Kindly refresh the page after scanning the qr code.</small>
+    <qrcode [qrdata]="whatsappQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+  </div>
+  <hr>
+  <div *ngIf="isWhatsappActive">
+
+    <div class="col-sm-8">
+      <h5>Send Test Message:</h5>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="sendWhatsappTestMessage()">Send</button>
+    </div>
+  </div>
+</div>
