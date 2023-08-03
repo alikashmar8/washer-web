@@ -9,4 +9,5 @@ export class CreateEmployeeDTO {
   phoneNumber: string;
   role: EmployeeRole;
   branchId: string;
+  image: string;
 }
