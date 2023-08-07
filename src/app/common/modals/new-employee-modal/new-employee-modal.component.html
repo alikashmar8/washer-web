@@ -17,6 +17,11 @@
       </div>
 
       <div class="form-label-group m-4">
+        <label for="icon">Image: </label>
+        <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
         <label>UserName:</label>
         <input type="text" name="username" id="username" [(ngModel)]="employee.username"
           class="form-control common-input px-3" placeholder="Username" required autofocus />
