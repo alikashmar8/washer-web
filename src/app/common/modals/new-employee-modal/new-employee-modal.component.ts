@@ -25,7 +25,10 @@ export class NewEmployeeModalComponent implements OnInit {
     email: null,
     phoneNumber: null,
     branchId: null,
+    image: null,
   };
+
+  imageFile: any;
 
   count: number;
   branches: Branch[] = [];
@@ -52,6 +55,10 @@ export class NewEmployeeModalComponent implements OnInit {
     } catch (err) {
       this.authService.handleHttpError(err);
     }
+  }
+
+  uploadImage(event: any) {
+    this.imageFile = event.target.files[0];
   }
 
   store() {
@@ -86,6 +93,12 @@ export class NewEmployeeModalComponent implements OnInit {
       return;
     }
 
+    if (!this.imageFile) {
+      this.alertService.toastError('Employee image should not be empty');
+      this.isStoreLoading = false;
+      return;
+    }
+
     if (
       !this.employee.branchId &&
       [EmployeeRole.BRANCH_EMPLOYEE, EmployeeRole.DRIVER].includes(
@@ -97,7 +110,18 @@ export class NewEmployeeModalComponent implements OnInit {
       return;
     }
 
-    this.employeesService.store(this.employee).subscribe({
+    const formData = new FormData();
+    formData.append('firstName', this.employee.firstName);
+    formData.append('lastName', this.employee.lastName);
+    formData.append('password', this.employee.password);
+    formData.append('role', this.employee.role);
+    formData.append('username', this.employee.username);
+    formData.append('email', this.employee.email);
+    formData.append('phoneNumber', this.employee.phoneNumber);
+    formData.append('branchId', this.employee.branchId);
+    formData.append('photo', this.imageFile, this.imageFile.name);
+
+    this.employeesService.store(formData).subscribe({
       next: (data) => {
         console.log(data);
         this.alertService.toastSuccess('Employee Added Successfully');
