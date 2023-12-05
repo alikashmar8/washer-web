@@ -4,6 +4,7 @@ import { Employee } from './employee.model';
 export class Branch {
   id: string;
   description: string;
+  coverageArea: number;
   isActive: boolean;
   addressId: string;
   address: Address;
