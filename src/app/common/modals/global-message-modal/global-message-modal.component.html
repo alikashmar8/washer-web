@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Send Global Message</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="col-md-12 form-group">
+    <label for="title" class="label required">Title:</label>
+    <input type="text" name="text" id="text" class="form-control" placeholder="" [(ngModel)]="text">
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="sendMessage()" translate>Send Now</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
+</div>
