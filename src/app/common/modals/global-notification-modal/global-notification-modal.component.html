@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Send Global Notification</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="col-md-12 form-group">
+    <label for="title" class="label required">Notification Title:</label>
+    <input type="text" name="title" id="title" class="form-control" placeholder="Title" [(ngModel)]="data.title">
+  </div>
+  <div class="col-md-12 form-group">
+    <label for="body" class="label required">Notification Body:</label>
+    <textarea type="text" name="body" id="body" class="form-control" placeholder="Body"
+      [(ngModel)]="data.body"></textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="sendNotification()" translate>Send Now</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)" translate>Close</button>
+</div>
