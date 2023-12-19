@@ -16,6 +16,7 @@ export class NewBranchModalComponent implements OnInit {
   currentEmployee: Employee;
   branch: CreateBranchDTO = {
     description: null,
+    coverageArea: null,
     address: {
       city: null,
       region: null,
@@ -51,17 +52,23 @@ export class NewBranchModalComponent implements OnInit {
       return;
     }
 
+    if (!this.branch.coverageArea) {
+      this.alertService.toastError('Branch coverage area should not be empty');
+      this.isStoreLoading = false;
+      return;
+    }
+
     if (!this.branch.address.city) {
       this.alertService.toastError('Branch city should not be empty');
       this.isStoreLoading = false;
       return;
     }
 
-    if (!this.branch.address.region) {
-      this.alertService.toastError('Branch region should not be empty');
-      this.isStoreLoading = false;
-      return;
-    }
+    // if (!this.branch.address.region) {
+    //   this.alertService.toastError('Branch region should not be empty');
+    //   this.isStoreLoading = false;
+    //   return;
+    // }
 
     if (!this.branch.address.building) {
       this.alertService.toastError('Branch building should not be empty');

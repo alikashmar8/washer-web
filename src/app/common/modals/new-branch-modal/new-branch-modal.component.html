@@ -16,11 +16,11 @@
           class="form-control common-input px-3" placeholder="Beirut" required autofocus />
       </div>
 
-      <div class="form-label-group m-4">
+      <!-- <div class="form-label-group m-4">
         <label class="required">Region:</label>
         <input type="text" name="region" id="region" [(ngModel)]="branch.address.region"
           class="form-control common-input px-3" placeholder="Al Hara" required autofocus />
-      </div>
+      </div> -->
 
       <div class="form-label-group m-4">
         <label class="required">Street:</label>
@@ -38,6 +38,12 @@
         <label class="required">Address Description:</label>
         <input type="text" name="addressDescription" id="addressDescription" [(ngModel)]="branch.address.description"
           class="form-control common-input px-3" placeholder="Beirut, Lebanon" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4">
+        <label class="required">Coverage Area <small>(in meters)</small>:</label>
+        <input type="number" name="coverageArea" id="coverageArea" [(ngModel)]="branch.coverageArea"
+          class="form-control common-input" placeholder="2000" required autofocus />
       </div>
 
       <div class="form-label-group m-2 row">
