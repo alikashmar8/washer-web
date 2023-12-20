@@ -90,6 +90,14 @@ export class NewServiceTypeModalComponent implements OnInit {
       return;
     }
 
+    if (this.type.showQuantityInput && this.type.showVehicleSelection) {
+      this.alertService.toastError(
+        'Showing quantity input and vehicle selection at the same time is not allowed'
+      );
+      this.isStoreLoading = false;
+      return;
+    }
+
     let data = new FormData();
     data.append('name', this.type.name);
     data.append('categoryId', this.type.categoryId);
