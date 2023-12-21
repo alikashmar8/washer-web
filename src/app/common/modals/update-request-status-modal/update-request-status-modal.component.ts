@@ -13,10 +13,11 @@ import { ServiceRequest } from './../../../../models/service-request.model';
 })
 export class UpdateRequestStatusModal implements OnInit {
   @Input() serviceRequest: ServiceRequest;
-
   newStatus: RequestStatus;
-
   RequestStatus = RequestStatus;
+  selectedDate: string;
+  selectedTime: string;
+
   constructor(
     private serviceRequestsService: ServiceRequestsService,
     public activeModal: NgbActiveModal,
@@ -29,14 +30,28 @@ export class UpdateRequestStatusModal implements OnInit {
       this.activeModal.dismiss();
       return;
     }
+
+    this.serviceRequest.confirmedDate =
+      this.serviceRequest.confirmedDate ?? this.serviceRequest.requestedDate;
+    const date = new Date(this.serviceRequest.confirmedDate);
+    const length = date.toISOString().length;
+    this.selectedDate = date.toISOString().slice(0, 10);
+    this.selectedTime = date.toISOString().slice(11, length - 1);
   }
 
   updateStatus() {
+    let selectedDateTime = null;
+    if (this.newStatus == RequestStatus.APPROVED) {
+      const dateTimeString = `${this.selectedDate}T${this.selectedTime}Z`;
+      // Create a Date object from the combined string
+      selectedDateTime = new Date(dateTimeString);
+    }
+
     this.serviceRequestsService
-      .changeStatus(this.serviceRequest.id, this.newStatus)
+      .changeStatus(this.serviceRequest.id, this.newStatus, selectedDateTime)
       .subscribe(
         (response) => {
-          this.serviceRequest.status = this.newStatus
+          this.serviceRequest.status = this.newStatus;
           this.alertService.toastSuccess('Status updated successfully');
           this.activeModal.close(true);
         },
