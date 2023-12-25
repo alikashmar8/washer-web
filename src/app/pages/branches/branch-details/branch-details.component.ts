@@ -165,6 +165,27 @@ export class BranchDetailsComponent implements OnInit {
     }
   }
 
+  async openEditCoverageArea() {
+    const newValue = await this.alertService.dynamicInputDialog({
+      inputType: InputType.NUMBER,
+      value: this.branch.coverageArea,
+    });
+    if (newValue && newValue != this.branch.coverageArea) {
+      this.branchesService
+        .update(this.branch.id, {
+          coverageArea: newValue,
+        })
+        .subscribe(
+          (res) => {
+            window.location.reload();
+          },
+          (err) => {
+            this.authService.handleHttpError(err);
+          }
+        );
+    }
+  }
+
   openAddressEdit() {
     const modalRef = this.modalService.open(AddressUpdateModalComponent, {
       size: 'lg',
