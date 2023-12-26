@@ -13,7 +13,13 @@
       <i class="fa fa-filter"></i>
     </button>
   </div>
-  <span class="col-sm-7"></span>
+  <span class="col-sm-5"></span>
+
+  <div class="col-md-3" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+    <button class="btn btn-primary" (click)="sendGlobalNotification()">
+      Send Global Notification
+    </button>
+  </div>
   <span class="col-sm-3">
     <button class="btn btn-success" (click)="openNewEmployeeModal()">
       Add New

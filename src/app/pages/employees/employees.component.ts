@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalNotificationModalComponent } from 'src/app/common/modals/global-notification-modal/global-notification-modal.component';
 import { NewEmployeeModalComponent } from 'src/app/common/modals/new-employee-modal/new-employee-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { BranchesService } from 'src/app/services/branches.service';
@@ -36,7 +37,6 @@ export class EmployeesComponent implements OnInit {
     role: null,
     isActive: null,
   };
-
   EmployeeRole = EmployeeRole;
 
   constructor(
@@ -96,5 +96,12 @@ export class EmployeesComponent implements OnInit {
 
   showHideFilters() {
     this.displayFilters = !this.displayFilters;
+  }
+
+  sendGlobalNotification() {
+    const modalRef = this.modalService.open(GlobalNotificationModalComponent, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.forEmployees = true;
   }
 }
