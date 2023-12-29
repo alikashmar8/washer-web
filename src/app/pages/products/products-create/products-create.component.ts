@@ -64,6 +64,7 @@ export class CreateProductsComponent implements OnInit {
       title: [null, Validators.required],
       description: [null],
       price: [null, Validators.required],
+      quantity: [null, Validators.required],
       categoryId: [null, Validators.required],
       // quantity: [null, Validators.required],
     });
@@ -101,6 +102,7 @@ export class CreateProductsComponent implements OnInit {
     data.append('title', this.form.value.title);
     data.append('description', this.form.value.description);
     data.append('price', this.form.value.price);
+    data.append('quantity', this.form.value.quantity);
     data.append('categoryId', this.form.value.categoryId);
 
     this.productsService.store(data).subscribe(
