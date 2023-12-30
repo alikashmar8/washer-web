@@ -98,6 +98,8 @@ export class ProductsEditComponent implements OnInit {
       this.form.invalid ||
       !this.product.title ||
       !this.product.price ||
+      !this.product.quantity == null ||
+      !this.product.quantity == undefined ||
       !this.product.categoryId
     ) {
       this.isUpdateLoading = false;
@@ -110,6 +112,7 @@ export class ProductsEditComponent implements OnInit {
       data.append('title', this.product.title);
       data.append('description', this.product.description);
       data.append('price', this.product.price + '');
+      data.append('quantity', this.product.quantity);
       data.append('categoryId', this.product.categoryId + '');
       for (var i = 0; i < this.uploadedImages.length; i++) {
         data.append(
@@ -123,6 +126,7 @@ export class ProductsEditComponent implements OnInit {
         title: this.product.title,
         description: this.product.description,
         price: this.product.price + '',
+        quantity: this.product.quantity + '',
         categoryId: this.product.categoryId + '',
       };
     }
@@ -134,7 +138,7 @@ export class ProductsEditComponent implements OnInit {
         this.product = res;
         this.alertService.toastSuccess('Product Updated Successfully');
         this.form.reset('image');
-        this.router.navigate(['products'])
+        this.router.navigate(['products']);
       },
       (err) => {
         this.isUpdateLoading = false;
