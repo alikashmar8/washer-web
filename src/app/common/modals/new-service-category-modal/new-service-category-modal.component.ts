@@ -17,6 +17,8 @@ export class NewServiceCategoryModalComponent implements OnInit {
   category: CreateServiceCategoryDto = {
     name: null,
     isActive: true,
+    showVehicleSelection: false,
+    showQuantityInput: true,
     icon: null,
   };
   file: any;
@@ -59,6 +61,8 @@ export class NewServiceCategoryModalComponent implements OnInit {
     let data = new FormData();
     data.append('name', this.category.name);
     data.append('isActive', this.category.isActive + '');
+    data.append('showVehicleSelection', this.category.showVehicleSelection + '');
+    data.append('showQuantityInput', this.category.showQuantityInput + '');
     data.append('icon', this.file, this.file.name);
 
     this.serviceCategoriesService.store(data).subscribe({

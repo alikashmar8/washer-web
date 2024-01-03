@@ -16,6 +16,19 @@
           autofocus />
       </div>
 
+      <div class="form-label-group m-4 col-md-6">
+        <label for="showQuantityInput">Show Quantity Input? </label>
+        <input type="checkbox" name="showQuantityInput" id="showQuantityInput" [(ngModel)]="category.showQuantityInput"
+          class="" required autofocus />
+      </div>
+
+      <div class="form-label-group m-4 col-md-6">
+        <label for="showVehicleSelection">Show Vehicle Selection? </label>
+        <input type="checkbox" name="showVehicleSelection" id="showVehicleSelection"
+          [(ngModel)]="category.showVehicleSelection" class="" required autofocus />
+      </div>
+
+
       <div class="form-label-group m-4">
         <label for="icon">Icon: </label>
         <input type="file" name="icon" id="icon" (change)="uploadImage($event)" class="" required autofocus />
