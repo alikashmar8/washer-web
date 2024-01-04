@@ -76,7 +76,7 @@
       <tr>
         <th>#</th>
         <th>User</th>
-        <th>Service</th>
+        <!-- <th>Service</th> -->
         <th>Status</th>
         <th>Total</th>
         <th>Is Paid?</th>
@@ -87,7 +87,7 @@
         <td>
           <a routerLink="/service-requests/{{request.id}}">{{request.id}}</a></td>
         <td>{{request.user.firstName}} {{request.user.lastName}}</td>
-        <td>{{request.type.category.name}} - {{request.type.name}}</td>
+        <!-- <td>{{request.type.category.name}} - {{request.type.name}}</td> -->
         <td [ngClass]="{
           'text-success': request.status == RequestStatus.DONE || request.status ==  RequestStatus.APPROVED,
           'text-info': request.status == RequestStatus.IN_PROGRESS,
