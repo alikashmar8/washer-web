@@ -3,6 +3,8 @@ export class ServiceCategory {
   name: string;
   icon?: string;
   isActive: boolean;
+  showQuantityInput: boolean;
+  showVehicleSelection: boolean;
   createdAt: Date;
   updatedAt: Date;
   // serviceTypes: ServiceType[];

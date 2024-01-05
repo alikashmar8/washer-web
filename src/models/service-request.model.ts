@@ -23,16 +23,17 @@ export class ServiceRequest {
   updatedAt: Date; //
   userId: string;//
   employeeId?: string; //
-  vehicleId?: string; //
+  // vehicleId?: string; //
   branchId: string; //
   transactionId?: string; //
-  typeId: string; //
+  // typeId: string; //
   addressId: string; //
   user: User; //
-  vehicle?: Vehicle; //
+  // vehicle?: Vehicle; //
   address?: Address; //
   employee?: Employee; //
   branch?: Branch; //
   // transaction?: Transaction;
-  type: ServiceType; //
+  // type: ServiceType; //
+  serviceRequestItems: any[]
 }
