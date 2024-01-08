@@ -53,10 +53,10 @@ export class ServiceRequestsService {
     });
   }
 
-  changeStatus(id: string, status: RequestStatus) {
+  changeStatus(id: string, status: RequestStatus, confirmedDate?: Date) {
     return this.http.patch(
       serviceRequestsEndpoint + id + '/status',
-      { status },
+      { status, confirmedDate },
       { headers: getHeaders() }
     );
   }
@@ -90,11 +90,9 @@ export class ServiceRequestsService {
     );
   }
 
-  update(serviceRequestId: string, data: { confirmedDate?: string; }) {
-    return this.http.patch(
-      serviceRequestsEndpoint + serviceRequestId,
-      data,
-      { headers: getHeaders() }
-    );
+  update(serviceRequestId: string, data: { confirmedDate?: string }) {
+    return this.http.patch(serviceRequestsEndpoint + serviceRequestId, data, {
+      headers: getHeaders(),
+    });
   }
 }
