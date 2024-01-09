@@ -10,6 +10,7 @@ import { Order } from '../../../models/order.model';
 import { AlertService } from '../../services/alert.service';
 import { AuthService } from '../../services/auth.service';
 import { InputType } from 'src/common/enums/input-type.enum';
+import { ShowOrderDetailsModalComponent } from 'src/app/common/modals/show-order-details-modal/show-order-details-modal.component';
 
 @Component({
   selector: 'app-orders',
@@ -104,5 +105,12 @@ export class OrdersComponent implements OnInit {
 
   counter(i: number) {
     return new Array(i);
+  }
+
+  openOrderDetailsModal(order) {
+    const modalRef = this.ngbModal.open(ShowOrderDetailsModalComponent, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.order = order;
   }
 }
