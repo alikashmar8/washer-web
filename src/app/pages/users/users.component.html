@@ -13,6 +13,17 @@
       <i class="fa fa-filter"></i>
     </button>
   </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-3" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+    <button class="btn btn-primary" (click)="sendGlobalNotification()">
+      Send Global Notification
+    </button>
+  </div>
+  <div class="col-md-3" *ngIf="currentEmployee.role == EmployeeRole.ADMIN">
+    <button class="btn btn-primary" (click)="sendGlobalMessage()">
+      Send Global Message
+    </button>
+  </div>
 </div>
 <hr>
 

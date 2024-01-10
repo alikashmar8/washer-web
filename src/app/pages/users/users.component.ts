@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalMessageModalComponent } from 'src/app/common/modals/global-message-modal/global-message-modal.component';
+import { GlobalNotificationModalComponent } from 'src/app/common/modals/global-notification-modal/global-notification-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users.service';
+import { EmployeeRole } from 'src/common/enums/employee-role.enum';
 import { Employee } from 'src/models/employee.model';
 import { User } from 'src/models/user.model';
 
@@ -19,6 +23,7 @@ export class UsersComponent implements OnInit {
   take: number = 10;
   totalPages: number = 1;
   displayFilters: boolean = false;
+  EmployeeRole = EmployeeRole;
 
   filters: {
     search: string;
@@ -29,7 +34,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private modalService: NgbModal
   ) {
     this.currentEmployee = this.authService.currentEmployee;
   }
@@ -72,5 +78,18 @@ export class UsersComponent implements OnInit {
 
   showHideFilters() {
     this.displayFilters = !this.displayFilters;
+  }
+
+  sendGlobalNotification() {
+    const modalRef = this.modalService.open(GlobalNotificationModalComponent, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.forEmployees = false;
+  }
+
+  sendGlobalMessage() {
+    const modalRef = this.modalService.open(GlobalMessageModalComponent, {
+      size: 'lg',
+    });
   }
 }
