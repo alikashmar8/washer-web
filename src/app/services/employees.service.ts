@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { EmployeeRole } from 'src/common/enums/employee-role.enum';
-import { getHeaders } from 'src/common/utils/functions';
+import { getFormDataHeaders, getHeaders } from 'src/common/utils/functions';
 import { employeesEndpoint } from 'src/constants/api-constants';
-import { CreateEmployeeDTO } from 'src/dtos/create-employee.dto';
 import { Employee } from 'src/models/employee.model';
 import { AuthService } from './auth.service';
 
@@ -44,8 +43,10 @@ export class EmployeesService {
       return value;
     });
   }
-  store(data: CreateEmployeeDTO) {
-    return this.http.post(employeesEndpoint, data, { headers: getHeaders() });
+  store(data) {
+    return this.http.post(employeesEndpoint, data, {
+      headers: getFormDataHeaders(),
+    });
   }
 
   delete(employeeId: string) {
