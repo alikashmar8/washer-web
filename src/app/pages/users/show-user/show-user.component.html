@@ -95,6 +95,8 @@
       <div class="col-md-6 p-1">
         <h6><strong>Wallet Amount:</strong></h6>
         {{user.wallet.balance}} {{user.wallet.currency}}
+        <i class="fa fa-pencil border rounded p-2" aria-hidden="true"
+          (click)="openUpdateWalletAmountModal(user.wallet.balance)"></i>
       </div>
       <div class="col-md-6 p-1">
         <h6><strong>Points:</strong></h6>
