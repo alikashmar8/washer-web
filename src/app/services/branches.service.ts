@@ -56,7 +56,7 @@ export class BranchesService {
     return this.http.post(branchesEndpoint, data, { headers: getHeaders() });
   }
 
-  update(id: string, data: { description?: string, isActive?: any }) {
+  update(id: string, data: { description?: string, isActive?: any, coverageArea?: number }) {
     return this.http.patch(branchesEndpoint + id, data, {
       headers: getHeaders(),
     });
