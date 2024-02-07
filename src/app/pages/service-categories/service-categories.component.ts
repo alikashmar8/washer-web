@@ -101,12 +101,8 @@ export class ServiceCategoriesComponent implements OnInit {
         if (result) {
           this.serviceCategoriesService.delete(categoryId).subscribe(
             (result: any) => {
-              if (result.affected > 0) {
-                this.alertService.toastSuccess('Category deleted successfully');
-                window.location.reload();
-              } else {
-                this.alertService.toastError('Error deleting category');
-              }
+              this.alertService.toastSuccess('Category deleted successfully');
+              window.location.reload();
             },
             (error) => {
               this.authService.handleHttpError(error);
