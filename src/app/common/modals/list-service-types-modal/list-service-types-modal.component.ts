@@ -39,9 +39,7 @@ export class ListServiceTypesModal implements OnInit {
     });
     modalRef.componentInstance.categoryId = this.serviceTypes[0].categoryId;
     modalRef.result.then((result) => {
-      if (result) {
-        window.location.reload();
-      }
+      window.location.reload();
     });
   }
 
@@ -53,12 +51,10 @@ export class ListServiceTypesModal implements OnInit {
         if (result) {
           this.serviceTypesService.delete(categoryId).subscribe(
             (result: any) => {
-              if (result.affected > 0) {
-                this.alertService.toastSuccess('Branch deleted successfully');
-                window.location.reload();
-              } else {
-                this.alertService.toastError('Error deleting branch');
-              }
+              window.location.reload();
+              this.alertService.toastSuccess(
+                'Service Type deleted successfully'
+              );
             },
             (error) => {
               this.authService.handleHttpError(error);

@@ -36,12 +36,8 @@ export class EmployeeListItemComponent implements OnInit {
         if (result) {
           this.employeesService.delete(employeeId).subscribe(
             (result: any) => {
-              if (result.affected > 0) {
-                this.alertService.toastSuccess('Employee deleted successfully');
-                window.location.reload();
-              } else {
-                this.alertService.toastError('Error deleting company');
-              }
+              window.location.reload();
+              this.alertService.toastSuccess('Employee deleted successfully');
             },
             (error) => {
               this.authService.handleHttpError(error);
