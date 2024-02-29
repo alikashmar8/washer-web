@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   key: string;
   password: string;
   isLoadingLogin: boolean = false;
-  loadingGif = 'https://i.gifer.com/6os.gif';
+  loadingGif = 'https://i.gifer.com/VZvw.gif';
   constructor(
     private authService: AuthService,
     private alertService: AlertService,

@@ -66,6 +66,7 @@ export class CategoriesComponent implements OnInit {
       (exception) => {
         console.log(exception);
         this.alertService.error('Error deleting category');
+        this.isDeleteLoading = false;
       }
     );
   }
