@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuardService } from 'src/guards/admin-guard.service';
 import { AnonymousGuardService } from 'src/guards/anonymous-guard.service';
 import { AuthGuardService } from 'src/guards/auth-guard.service';
+import { AdsComponent } from './pages/ads/ads.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { BranchDetailsComponent } from './pages/branches/branch-details/branch-details.component';
 import { BranchesComponent } from './pages/branches/branches.component';
@@ -16,13 +17,15 @@ import { CreateProductsComponent } from './pages/products/products-create/produc
 import { ProductsEditComponent } from './pages/products/products-edit/products-edit.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { PromosComponent } from './pages/promos/promos.component';
+import { DeleteRequestComponent } from './pages/public/delete-request/delete-request.component';
+import { PrivacyPolicyComponent } from './pages/public/privacy-policy/privacy-policy.component';
+import { TermConditionsComponent } from './pages/public/term-conditions/term-conditions.component';
 import { ServiceCategoriesComponent } from './pages/service-categories/service-categories.component';
 import { ServiceRequestDetailsComponent } from './pages/service-requests/service-request-details/service-request-details.component';
 import { ServiceRequestsComponent } from './pages/service-requests/service-requests.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ShowUserComponent } from './pages/users/show-user/show-user.component';
 import { UsersComponent } from './pages/users/users.component';
-import { AdsComponent } from './pages/ads/ads.component';
 
 const routes: Routes = [
   {
@@ -140,6 +143,18 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [AnonymousGuardService],
+  },
+  {
+    path: 'delete-request',
+    component: DeleteRequestComponent,
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+  },
+  {
+    path: 'terms-conditions',
+    component: TermConditionsComponent,
   },
 ];
 
