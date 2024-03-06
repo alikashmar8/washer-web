@@ -62,6 +62,12 @@ import { UsersComponent } from './pages/users/users.component';
 import { LoadingService } from './services/loading.service';
 import { AdsComponent } from './pages/ads/ads.component';
 import { CreateAdModalComponent } from './common/modals/create-ad-modal/create-ad-modal.component';
+import { GlobalNotificationModalComponent } from './common/modals/global-notification-modal/global-notification-modal.component';
+import { GlobalMessageModalComponent } from './common/modals/global-message-modal/global-message-modal.component';
+import { ShowOrderDetailsModalComponent } from './common/modals/show-order-details-modal/show-order-details-modal.component';
+import { DeleteRequestComponent } from './pages/public/delete-request/delete-request.component';
+import { PrivacyPolicyComponent } from './pages/public/privacy-policy/privacy-policy.component';
+import { TermConditionsComponent } from './pages/public/term-conditions/term-conditions.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +113,12 @@ import { CreateAdModalComponent } from './common/modals/create-ad-modal/create-a
     ProductDetailsModalComponent,
     AdsComponent,
     CreateAdModalComponent,
+    GlobalNotificationModalComponent,
+    GlobalMessageModalComponent,
+    ShowOrderDetailsModalComponent,
+    DeleteRequestComponent,
+    PrivacyPolicyComponent,
+    TermConditionsComponent,
   ],
   imports: [
     BrowserModule,
