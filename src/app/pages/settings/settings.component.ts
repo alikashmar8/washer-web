@@ -34,7 +34,12 @@ export class SettingsComponent implements OnInit {
     try {
       this.loadingService.display(true);
       this.settings = await this.settingsService.getAll();
-      this.isWhatsappActive = await this.authService.getWhatsappStatus();
+      try {
+        this.isWhatsappActive = await this.authService.getWhatsappStatus();
+      } catch (error) {
+        console.error('Whatsapp Status error');
+        this.isWhatsappActive = false;
+      }
       if (!this.isWhatsappActive) {
         this.whatsappQrCode = await this.authService.getWhatsappQrCode();
       }
@@ -46,15 +51,15 @@ export class SettingsComponent implements OnInit {
   }
 
   openUpdateModal(setting: Setting): void {
-    const modalRef = this.modalService.open(UpdateSettingModal)
+    const modalRef = this.modalService.open(UpdateSettingModal);
     modalRef.componentInstance.setting = setting;
   }
 
-  async sendWhatsappTestMessage(){
-    return await this.authService.sendWhatsappTestMessage()
+  async sendWhatsappTestMessage() {
+    return await this.authService.sendWhatsappTestMessage();
   }
 
-  async terminateWhatsapp(){
+  async terminateWhatsapp() {
     return await this.authService.terminateWhatsappConfiguration();
   }
 }
