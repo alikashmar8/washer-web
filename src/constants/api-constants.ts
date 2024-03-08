@@ -1,5 +1,5 @@
-export const backendUrl = 'http://localhost:3001/';
-// export const backendUrl = 'http://113.30.189.70:3000/';
+// export const backendUrl = 'http://localhost:3001/';
+export const backendUrl = 'http://75.119.158.69:3001/'; // PROD
 export const apiUrl = backendUrl + 'api/';
 export const mediaRoot = backendUrl;
 
@@ -21,6 +21,9 @@ export const productsEndpoint = apiUrl + 'products/';
 export const ordersEndpoint = apiUrl + 'orders/';
 export const addressesEndpoint = apiUrl + 'addresses/';
 export const adsEndpoint = apiUrl + 'ads/';
+export const notificationsEndpoint = apiUrl + 'notifications/';
+export const chatsEndpoint = apiUrl + 'chats/';
+export const walletsEndpoint = apiUrl + 'wallets/';
 
 // admin endpoints
 export const adminCompaniesEndpoint = apiUrl + 'admin/companies/';
