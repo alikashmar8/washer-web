@@ -74,6 +74,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
             }
           );
       }
+      this.serviceRequest.requestedDate.toLocaleDateString
     } catch (err) {
       console.log(err);
       this.authService.handleHttpError(err);

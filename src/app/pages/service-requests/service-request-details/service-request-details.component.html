@@ -16,23 +16,49 @@
     </div>
     <div class="col-md-6 p-1">
       <h6><strong>Created At:</strong></h6>
-      {{serviceRequest.createdAt}}
+      {{serviceRequest.createdAt | date: "dd/MM/yyyy hh:mm"}}
     </div>
     <div class="col-md-6 p-1">
       <h6><strong>Requested Date:</strong></h6>
-      {{serviceRequest.requestedDate}}
+      {{serviceRequest.requestedDate | date: "dd/MM/yyyy hh:mm" }}
     </div>
     <div class="col-md-6 p-1">
       <h6><strong>Confirmed Date:</strong></h6>
-      {{serviceRequest.confirmedDate}}
-      <button class="btn btn-secondary" (click)="confirmNow()">Confirm Now</button>
+      {{serviceRequest.confirmedDate | date: "dd/MM/yyyy hh:mm"}}
+      <!-- <button class="btn btn-secondary" (click)="confirmNow()">Confirm Now</button> -->
     </div>
   </div>
 </div>
 <div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
   <h5><strong>Service Details:</strong></h5>
   <hr>
-  <div class="row">
+  <table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>
+          Type
+        </th>
+        <th>
+          Vehicle
+        </th>
+        <th>
+          Quantity
+        </th>
+        <th>
+          Price
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of serviceRequest.serviceRequestItems">
+        <td>{{item.type.name}}</td>
+        <td>{{item.type.vehicle?.name}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.price}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <div class="row">
     <div class="col-md-6 p-1">
       <h6><strong>Service:</strong></h6>
       {{serviceRequest.type.name}}
@@ -46,7 +72,7 @@
       {{serviceRequest.vehicle.branch}}, {{serviceRequest.vehicle.model}}, {{serviceRequest.vehicle.color}},
       <strong>Plate NB: </strong> {{serviceRequest.vehicle.plateSymbol}} {{serviceRequest.vehicle.plateNumber}}
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="container border rounded p-4 m-4" *ngIf="serviceRequest">
   <h5><strong>Payment Details:</strong></h5>
